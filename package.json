@@ -1,0 +1,10 @@
+{
+  "name": "sparql-visualizer",
+  "version": "0.0.1",
+  "description": "A typescript library to simplify visualization of SPARQL queries.",
+  "main": "dist/index.js",
+  "repository": "git@github.com:code-openness/sparql-visualizer.git",
+  "author": "code-openness",
+  "license": "GPLv3",
+  "private": false
+}
