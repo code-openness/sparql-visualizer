@@ -15,7 +15,7 @@
         "typescript": "3.4.5"
     },
     "scripts": {
-        "test": "jest",
+        "test": "jest --coverage",
         "prettier": "prettier --write **/*.{js,ts,css,scss,json,md,html}"
     }
 }
