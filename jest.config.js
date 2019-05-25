@@ -12,5 +12,5 @@ module.exports = {
             lines: COVERAGE_THRESHOLD_PERCENT,
             statements: COVERAGE_THRESHOLD_PERCENT
         }
-    },
+    }
 };

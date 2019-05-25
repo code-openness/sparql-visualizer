@@ -1,40 +1,76 @@
-import {
-  WikidataEndpoint,
-  DEFAULT_WIKIDATA_HOST,
-  DEFAULT_WIKIDATA_PROTOCOL
-} from "./Endpoint";
+import { WikidataEndpoint } from './Endpoint';
 
-type HttpProtocol = import("./index.types").HttpProtocol;
+type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
-const HTTP_PROTOCOL: HttpProtocol = "http";
-const WIKIDATA_HOST: string = "pik-wikidata.de";
+const CUSTOM_ENDPOINT_CONFIG: WikidataEndpointConfig = {
+    httpProtocol: 'http',
+    host: 'pik-wikidata.de',
+    port: 8181
+};
 
-describe("Wikidata Endpoint", () => {
-  let wikidataEndpoint: WikidataEndpoint;
+describe('Wikidata Endpoint', () => {
+    let wikidataEndpoint: WikidataEndpoint;
 
-  beforeEach(() => {
-    wikidataEndpoint = new WikidataEndpoint(HTTP_PROTOCOL, WIKIDATA_HOST);
-  });
+    beforeEach(() => {
+        wikidataEndpoint = new WikidataEndpoint();
+    });
 
-  it("should return the default protocol if no protocol was provided", () => {
-    wikidataEndpoint = new WikidataEndpoint();
-    expect(wikidataEndpoint.getProtocol()).toEqual(DEFAULT_WIKIDATA_PROTOCOL);
-  });
+    it('should return the default endpoints when nothing was procided', () => {
+        expect(wikidataEndpoint.getConfiguration()).toEqual({
+            host: 'wikidata.org',
+            httpProtocol: 'https',
+            port: 0
+        });
+    });
 
-  it("should return the default host if no host was provided", () => {
-    wikidataEndpoint = new WikidataEndpoint();
-    expect(wikidataEndpoint.getHost()).toEqual(DEFAULT_WIKIDATA_HOST);
-  });
+    it('should compose a valid sparql query endpoint url', () => {
+        expect(wikidataEndpoint.getSPARQLQueryURL()).toEqual('https://query.wikidata.org');
+    });
 
-  it("should compose the valid sparql query endpoint url", () => {
-    expect(wikidataEndpoint.getSPARQLQueryURL()).toEqual(
-      "http://query.pik-wikidata.de"
-    );
-  });
+    it('should compose a valid sparql endpoint url with a port', () => {
+        wikidataEndpoint = new WikidataEndpoint(CUSTOM_ENDPOINT_CONFIG);
 
-  it("should compose the valid sparql query visualization url", () => {
-    expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
-      "http://query.pik-wikidata.de/embed.html"
-    );
-  });
+        expect(wikidataEndpoint.getSPARQLQueryURL()).toEqual('http://query.pik-wikidata.de:8181');
+    });
+
+    it('should compose a valid sparql query visualization url', () => {
+        wikidataEndpoint = new WikidataEndpoint(CUSTOM_ENDPOINT_CONFIG);
+
+        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
+            'http://query.pik-wikidata.de:8181/embed.html'
+        );
+    });
+
+    it('should not prefix the host if it is localhost and use http', () => {
+        wikidataEndpoint = new WikidataEndpoint({
+            host: 'localhost',
+            port: 8181
+        });
+
+        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
+            'http://localhost:8181/embed.html'
+        );
+    });
+
+    it('should not prefix the host if it is 127.0.0.1 and use http', () => {
+        wikidataEndpoint = new WikidataEndpoint({
+            host: '127.0.0.1',
+            port: 8181
+        });
+
+        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
+            'http://127.0.0.1:8181/embed.html'
+        );
+    });
+
+    it('should not prefix the host if it is 0.0.0.0 and use http', () => {
+        wikidataEndpoint = new WikidataEndpoint({
+            host: '0.0.0.0',
+            port: 8181
+        });
+
+        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
+            'http://0.0.0.0:8181/embed.html'
+        );
+    });
 });

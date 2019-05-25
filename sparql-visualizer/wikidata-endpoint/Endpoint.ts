@@ -1,31 +1,47 @@
-type HttpProtocol = import("./index.types").HttpProtocol;
+type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
-export const DEFAULT_WIKIDATA_PROTOCOL: HttpProtocol = "https";
-export const DEFAULT_WIKIDATA_HOST: string = "wikidata.org";
+const DEFAULT_WIKIDATA_CONFIG: Required<WikidataEndpointConfig> = {
+    host: 'wikidata.org',
+    httpProtocol: 'https',
+    port: 0
+};
 
 export class WikidataEndpoint {
-  constructor(
-    private readonly httpProtocol: HttpProtocol = DEFAULT_WIKIDATA_PROTOCOL,
-    private readonly wikidataHost: string = DEFAULT_WIKIDATA_HOST
-  ) {}
+    private readonly configuration: Required<WikidataEndpointConfig> = DEFAULT_WIKIDATA_CONFIG;
 
-  public getSPARQLQueryURL(): string {
-    const { httpProtocol, wikidataHost } = this;
+    constructor(configuration?: WikidataEndpointConfig) {
+        this.configuration = {
+            ...this.configuration,
+            ...(configuration ? configuration : {})
+        };
+    }
 
-    return `${httpProtocol}://query.${wikidataHost}`;
-  }
+    public getSPARQLQueryURL(): string {
+        return this.getBaseUrl();
+    }
 
-  public getSPARQLVisualisationURL(): string {
-    const { httpProtocol, wikidataHost } = this;
+    public getSPARQLVisualisationURL(): string {
+        return `${this.getBaseUrl()}/embed.html`;
+    }
 
-    return `${httpProtocol}://query.${wikidataHost}/embed.html`
-  }
+    private getBaseUrl(): string {
+        const { host, httpProtocol, port } = this.configuration;
+        const portString = port !== 0 ? `:${port}` : '';
 
-  public getProtocol(): HttpProtocol {
-      return this.httpProtocol;
-  }
+        if (this.isLocalhost()) {
+            return `http://${host}${portString}`;
+        } else {
+            return `${httpProtocol}://query.${host}${portString}`;
+        }
+    }
 
-  public getHost(): string {
-      return this.wikidataHost;
-  }
+    private isLocalhost(): boolean {
+        const { host } = this.configuration;
+
+        return ['localhost', '127.0.0.1', '0.0.0.0'].indexOf(host) >= 0;
+    }
+
+    public getConfiguration(): Readonly<WikidataEndpointConfig> {
+        return this.configuration;
+    }
 }
