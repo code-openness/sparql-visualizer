@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "rootDir": ".",
+        "baseUrl": "./node_modules",
+        "outDir": "./dist",
+        "target": "es5",
+        "module": "commonjs",
+        "lib": ["dom", "es5", "es2015.promise", "es2015.core"],
+        "importHelpers": false,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "alwaysStrict": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "typeRoots": ["./node_modules/@types"],
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    },
+    "include": ["sparql-visualizer"],
+    "exclude": ["node_modules", "dist", "coverage"]
+}
