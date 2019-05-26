@@ -32,7 +32,7 @@ export class WikidataEndpoint {
 
     private getBaseUrl(): string {
         const { host, httpProtocol, port } = this.configuration;
-        const portString = port !== 0 ? `:${port}` : '';
+        const portString: string = port !== 0 ? `:${port}` : '';
 
         if (this.isLocalhost()) {
             return `http://${host}${portString}`;

@@ -7,6 +7,15 @@
     "author": "code-openness",
     "license": "GPL-3.0-only",
     "private": false,
+    "scripts": {
+        "start": "webpack-dev-server --config webpack/webpack.development.config.js",
+        "build": "webpack --config webpack/webpack.production.config.js",
+        "lint": "npm-run-all --parallel lint:*",
+        "lint:ts": "tslint --project tsconfig.json --format stylish",
+        "test": "jest --coverage",
+        "prettier": "prettier --write **/*.{js,ts,css,scss,json,md,html}",
+        "clean": "rimraf dist/ coverage/"
+    },
     "devDependencies": {
         "@types/jest": "24.0.13",
         "jest": "24.8.0",
@@ -24,14 +33,5 @@
         "webpack-cli": "3.3.2",
         "webpack-dev-server": "3.4.1",
         "webpack-merge": "4.2.1"
-    },
-    "scripts": {
-        "start": "webpack --config webpack/webpack.development.config.js",
-        "build": "webpack --config webpack/webpack.production.config.js",
-        "lint": "npm-run-all --parallel lint:*",
-        "lint:ts": "tslint --project tsconfig.json --format stylish",
-        "test": "jest --coverage",
-        "prettier": "prettier --write **/*.{js,ts,css,scss,json,md,html}",
-        "clean": "rimraf dist/ coverage/"
     }
 }
