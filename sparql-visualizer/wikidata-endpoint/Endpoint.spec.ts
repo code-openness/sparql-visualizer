@@ -1,10 +1,10 @@
-import { WikidataEndpoint } from './Endpoint';
+import { LOCALHOST_IDENTIFIER, WikidataEndpoint } from './Endpoint';
 
 type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
 const CUSTOM_ENDPOINT_CONFIG: WikidataEndpointConfig = {
-    httpProtocol: 'http',
     host: 'pik-wikidata.de',
+    httpProtocol: 'http',
     port: 8181
 };
 
@@ -42,35 +42,15 @@ describe('Wikidata Endpoint', () => {
     });
 
     it('should not prefix the host if it is localhost and use http', () => {
-        wikidataEndpoint = new WikidataEndpoint({
-            host: 'localhost',
-            port: 8181
-        });
-
-        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
-            'http://localhost:8181/embed.html'
+        const urlsWithPort: string[] = LOCALHOST_IDENTIFIER.map(
+            (localhostIdentifier: string): string => new WikidataEndpoint({
+                    host: localhostIdentifier,
+                    port: 8181
+                }).getSPARQLVisualisationURL()
+        ).filter(
+            (url: string): boolean => url.indexOf(':8181') < 0
         );
-    });
 
-    it('should not prefix the host if it is 127.0.0.1 and use http', () => {
-        wikidataEndpoint = new WikidataEndpoint({
-            host: '127.0.0.1',
-            port: 8181
-        });
-
-        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
-            'http://127.0.0.1:8181/embed.html'
-        );
-    });
-
-    it('should not prefix the host if it is 0.0.0.0 and use http', () => {
-        wikidataEndpoint = new WikidataEndpoint({
-            host: '0.0.0.0',
-            port: 8181
-        });
-
-        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
-            'http://0.0.0.0:8181/embed.html'
-        );
+        expect(urlsWithPort).toEqual([]);
     });
 });
