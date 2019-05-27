@@ -8,13 +8,15 @@
     "license": "GPL-3.0-only",
     "private": false,
     "scripts": {
-        "start": "webpack-dev-server --config webpack/webpack.development.config.js",
+        "analyze": "webpack --config webpack/webpack.analyze.config.js",
         "build": "webpack --config webpack/webpack.production.config.js",
+        "clean": "rimraf dist/ coverage/",
         "lint": "npm-run-all --parallel lint:*",
         "lint:ts": "tslint --project tsconfig.json --format stylish",
-        "test": "jest --coverage",
         "prettier": "prettier --write **/*.{js,ts,css,scss,json,md,html}",
-        "clean": "rimraf dist/ coverage/"
+        "prestart": "yarn lint",
+        "start": "webpack-dev-server --config webpack/webpack.development.config.js",
+        "test": "jest --coverage"
     },
     "devDependencies": {
         "@types/jest": "24.0.13",
@@ -30,6 +32,7 @@
         "tslint-microsoft-contrib": "6.2.0",
         "typescript": "3.4.5",
         "webpack": "4.32.2",
+        "webpack-bundle-analyzer": "3.3.2",
         "webpack-cli": "3.3.2",
         "webpack-dev-server": "3.4.1",
         "webpack-merge": "4.2.1"
