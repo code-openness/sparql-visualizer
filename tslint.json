@@ -1,0 +1,26 @@
+{
+    "defaultSeverity": "error",
+    "extends": ["tslint:recommended", "tslint-config-prettier"],
+    "rulesDirectory": ["./node_modules/tslint-microsoft-contrib"],
+    "linterOptions": {
+        "exclude": ["node_modules", "dist", "coverage", "webpack"]
+    },
+    "rules": {
+        "interface-name": false,
+        "typedef": [
+            true,
+            "call-signature",
+            "arrow-call-signature",
+            "parameter",
+            "arrow-parameter",
+            "property-declaration",
+            "variable-declaration",
+            "member-variable-declaration"
+        ],
+        "no-any": true,
+        "no-empty-interface": true,
+        "no-console": true,
+        "no-trailing-whitespace": true,
+        "trailing-comma": [true, "never"]
+    }
+}

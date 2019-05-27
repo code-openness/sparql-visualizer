@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<head>
+    <title>SPARQL visualizer playground</title>
+</head>
+
+<body>
+    <h1>SPARQL visualizer playground</h1>
+
+    <h2>Table visualization</h2>
+
+    <div data-visualisation="Table">
+        <script type="application/json" data-content="Configuration">
+            {
+                query: `
+                    #Musikgenres
+                    #graph rendering could be slow due to large number of results
+                    
+                    SELECT ?item ?itemLabel ?_subclass_of ?_subclass_ofLabel
+                    WHERE {
+                    ?item wdt:P31 wd:Q188451;
+                            wdt:P279 ?_subclass_of.
+                    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                    } LIMIT 100
+                `
+            }
+        </script>
+    </div>
+
+    <script src="index.js" type="text/javascript"></script>
+</body>
+
+</html>
