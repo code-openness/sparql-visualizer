@@ -12,28 +12,28 @@ jobs:
       - checkout
 
       - restore_cache:
-        name: Restore node_modules
-        key:
-          - node_modules-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          name: Restore node_modules
+          keys:
+            - node_modules-{{ checksum "yarn.lock" }}
 
       - run:
-        name: Install
-        command: yarn install --frozen-lockfile
+          name: Install
+          command: yarn install --frozen-lockfile
 
       - save_cache:
-        name: Save node_modules
-        key: node_modules-{{ .Branch }}-{{ checksum "yarn.lock" }}
-        paths:
-          - node_modules
+          name: Save node_modules
+          key: node_modules-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
 
       - run:
-        name: Lint
-        command: yarn lint
+          name: Lint
+          command: yarn lint
 
       - run:
-        name: Test
-        command: yarn test
+          name: Test
+          command: yarn test
 
       - run:
-        name: Build
-        command: yarn build
+          name: Build
+          command: yarn build
