@@ -1,3 +1,5 @@
+type VisualisationIdentifier = import("./index.types").VisualisationIdentifier;
+
 /**
   * // TODO: create a function which gets the querry and the vizualization type, then
   * returns a URL which can be given to iframe to visualize it
@@ -41,7 +43,7 @@
     return res;
   }
 
-  export function constructQuerry(vizualizationType:string, querry: string){
+  export function constructQuerry(vizualizationType: VisualisationIdentifier, querry: string){
     const res = '#defaultView:' + vizualizationType + '\n'+ querry;
     return res;
   }
