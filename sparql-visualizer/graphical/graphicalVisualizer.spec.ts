@@ -70,7 +70,6 @@ test('check if encoded part is correct for HTML', () => {
 });
 
 
-
 /** Expected URL copied from iFrame/ Wikilink */
 
 test('check if iFrame URL == Wikilink URL', () => {
