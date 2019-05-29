@@ -58,7 +58,7 @@ yarn build     #
 
 ### Testing
 
-Testing is performed with [Jest](). Checkout their documentation and look at
+Testing is performed with [Jest](https://jestjs.io/). Checkout their documentation and look at
 existing test suites (all files with suffix `.spec.ts`) to get you started.
 
 ## Deploy
