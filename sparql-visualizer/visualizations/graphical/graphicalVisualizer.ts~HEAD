@@ -8,6 +8,6 @@ export function constructGraphicalVisualizerUrl(query: string, endpoint: string,
   return encodedQuery;
 }
 export function additionalSymbolEncoding (query: string): string {
-   query = query.split("'").join("%27").split("(").join("%28").split(")").join("%29");
+   query = query.split("'").join("%27").split("(").join("%28").split(")").join("%29"); 
    return query;
 }
