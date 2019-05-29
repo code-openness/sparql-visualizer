@@ -1,8 +1,4 @@
-version: 2.1
-general:
-  branches:
-    only:
-      - master
+version: 2
 jobs:
   build:
     docker:
@@ -12,28 +8,19 @@ jobs:
       - checkout
 
       - restore_cache:
-        name: Restore node_modules
-        key:
-          - node_modules-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          keys:
+            - node_modules-{{ checksum "yarn.lock" }}
+            - node_modules-
 
-      - run:
-        name: Install
-        command: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
-        name: Save node_modules
-        key: node_modules-{{ .Branch }}-{{ checksum "yarn.lock" }}
-        paths:
-          - node_modules
+          key: node_modules-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
 
-      - run:
-        name: Lint
-        command: yarn lint
+      - run: yarn lint
 
-      - run:
-        name: Test
-        command: yarn test
+      - run: yarn test
 
-      - run:
-        name: Build
-        command: yarn build
+      - run: yarn build
