@@ -13,7 +13,7 @@
         "clean": "rimraf dist/ coverage/",
         "lint": "npm-run-all --parallel lint:*",
         "lint:ts": "tslint --project tsconfig.json --format stylish",
-        "prettier": "prettier --write **/*.{ts,css,json,md,html}",
+        "prettier": "prettier --write '**/*.{ts,css,json,md,html}'",
         "prestart": "yarn lint",
         "start": "webpack-dev-server --config webpack/webpack.development.config.js",
         "test": "jest --coverage"
@@ -23,7 +23,7 @@
             "prettier-tslint fix",
             "git add"
         ],
-        "*{css,json,md,html}": [
+        "*.{css,json,md,html}": [
             "prettier --write **/*.{css,json,md,html}",
             "git add"
         ]
