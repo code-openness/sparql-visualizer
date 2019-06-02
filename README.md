@@ -53,7 +53,7 @@ yarn start     # start the webpack development server on port 8080
 yarn test      # run jest to check all test suites (*.spec.ts)
 yarn lint      # lint all code with tslint
 yarn prettier  # run prettier to autoformat the code
-yarn build     # 
+yarn build     #
 ```
 
 ### Testing

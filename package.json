@@ -14,8 +14,7 @@
         "lint": "npm-run-all --parallel lint:*",
         "lint:ts": "tslint --project tsconfig.json --format stylish",
         "prettier": "prettier --write '**/*.{ts,css,json,md,html}'",
-        "prestart": "yarn lint",
-        "start": "webpack-dev-server --config webpack/webpack.development.config.js",
+        "start": "webpack-dev-server --hot --config webpack/webpack.development.config.js",
         "test": "jest --coverage"
     },
     "lint-staged": {
