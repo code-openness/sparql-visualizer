@@ -18,7 +18,9 @@
         "test": "jest --coverage"
     },
     "husky": {
-        "pre-commit": "lint-staged"
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     },
     "lint-staged": {
         "*.ts": [
