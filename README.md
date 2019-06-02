@@ -1,4 +1,4 @@
-![CircleCI](https://circleci.com/gh/code-openness/sparql-visualizer/tree/master.svg?style=svg)](https://circleci.com/gh/code-openness/sparql-visualizer/tree/master)
+![[CircleCI](https://circleci.com/gh/code-openness/sparql-visualizer/tree/master.svg?style=svg)](https://circleci.com/gh/code-openness/sparql-visualizer/tree/master)
 
 [![node-v10.5.3](https://img.shields.io/badge/node-v10.5.3-blue.svg)](https://nodejs.org/en/)
 [![yarn-v1.5.12](https://img.shields.io/badge/yarn-v1.5.12-orange.svg)](https://yarnpkg.com/en/docs/getting-started)
