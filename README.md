@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/code-openness/sparql-visualizer/tree/master.svg?style=svg)](https://circleci.com/gh/code-openness/sparql-visualizer/tree/master)
+![CircleCI](https://circleci.com/gh/code-openness/sparql-visualizer/tree/master.svg?style=svg)](https://circleci.com/gh/code-openness/sparql-visualizer/tree/master)
 
 [![node-v10.5.3](https://img.shields.io/badge/node-v10.5.3-blue.svg)](https://nodejs.org/en/)
 [![yarn-v1.5.12](https://img.shields.io/badge/yarn-v1.5.12-orange.svg)](https://yarnpkg.com/en/docs/getting-started)
@@ -49,11 +49,13 @@ You can use the following scripts to develop, test, lint, format, deploy (, ...)
 the project.
 
 ```sh
+yarn analyze   # starts webpack and the webpack-bundle-analyzer
+yarn build     # transpiles the source code into the dist/ folder
+yarn clean     # removes the dist/ and coverage/ folders
+yarn lint      # lints all files
+yarn prettier  # runs prettier to autoformat the code
 yarn start     # start the webpack development server on port 8080
 yarn test      # run jest to check all test suites (*.spec.ts)
-yarn lint      # lint all code with tslint
-yarn prettier  # run prettier to autoformat the code
-yarn build     #
 ```
 
 ### Testing
@@ -63,4 +65,6 @@ existing test suites (all files with suffix `.spec.ts`) to get you started.
 
 ## Deploy
 
-**TODO**
+Run `yarn build` to generate the final Javascript file in the `dist/` folder
+and import it in your Javascript, Typescript project or thourgh a `<script>` tag
+in your static HTML.
