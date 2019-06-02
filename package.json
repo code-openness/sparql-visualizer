@@ -17,6 +17,9 @@
         "start": "webpack-dev-server --hot --config webpack/webpack.development.config.js",
         "test": "jest --coverage"
     },
+    "husky": {
+        "pre-commit": "lint-staged"
+    },
     "lint-staged": {
         "*.ts": [
             "prettier-tslint fix",
@@ -26,9 +29,6 @@
             "prettier --write **/*.{css,json,md,html}",
             "git add"
         ]
-    },
-    "husky": {
-        "pre-commit": "lint-staged"
     },
     "devDependencies": {
         "@types/jest": "24.0.13",
