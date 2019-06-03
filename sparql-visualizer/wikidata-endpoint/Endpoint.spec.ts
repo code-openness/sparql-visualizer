@@ -43,12 +43,11 @@ describe('Wikidata Endpoint', () => {
 
     it('should not prefix the host if it is localhost and use http', () => {
         const urlsWithPort: string[] = LOCALHOST_IDENTIFIER.map(
-            (localhostIdentifier: string): WikidataEndpoint => new WikidataEndpoint({ host: localhostIdentifier, port: 8181 })
-        ).map(
-            (endpoint: WikidataEndpoint): string => endpoint.getSPARQLVisualisationURL()
-        ).filter(
-            (url: string): boolean => url.indexOf(':8181') < 0
-        );
+            (localhostIdentifier: string): WikidataEndpoint =>
+                new WikidataEndpoint({ host: localhostIdentifier, port: 8181 })
+        )
+            .map((endpoint: WikidataEndpoint): string => endpoint.getSPARQLVisualisationURL())
+            .filter((url: string): boolean => url.indexOf(':8181') < 0);
 
         expect(urlsWithPort).toEqual([]);
     });
