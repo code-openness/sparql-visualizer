@@ -1,7 +1,6 @@
-import {graphicalVisualizerUrlConstructor, queryNormalizer} from './GraphicalVisualizer';
+import { graphicalVisualizerUrlConstructor, queryNormalizer } from './GraphicalVisualizer';
 type VisualisationIdentifier = import ('./index.types').VisualisationIdentifier;
 type URLTypeIdentifier = import ('./index.types').URLTypeIdentifier;
-
 
 describe ('GraphicalVisualizer', () => {
   it('should encode the specified querry for the iFrame format', () => {
