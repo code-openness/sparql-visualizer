@@ -1,5 +1,5 @@
 
-export type VisualisationIdentifier = 
+export type VisualisationIdentifier =
     | 'BubbleChart'
     | 'BarChart'
     | 'Table'
@@ -14,7 +14,7 @@ export type VisualisationIdentifier =
     | 'ImageGrid'
     | 'LineChart';
 
-export type URLTypeIdentifier = 
+export type URLTypeIdentifier =
     | 'Wikilink'
     | 'HTML'
     | 'iFrame'
