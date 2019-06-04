@@ -5,27 +5,111 @@
 </head>
 
 <body>
-    <h1>SPARQL visualizer playground</h1>
+    <div class="wrapAll clearfix">
+        <div class="sidebar">
+            <div class="logo">
+                <a href="/"><img src="img/logo.png" alt="logo"/></a>
+            </div>
+            <div class="navigation">
+                <h3>Heading</h3>
+                <ul>
+                    <li><a href="#">Main page</a></li>
+                    <li><a href="#">Contents</a></li>
+                    <li><a href="#">Featured content</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mainsection">
+            <!-- This heading might be for future use
+            <div class="headerLinks">
+                <span class="user">Not logged in</span> <a href="#">Talk</a> <a href="#">Contributions</a> <a href="#">Create account</a> <a href="#">Log in</a>
+            </div>
+            <div class="tabs clearfix">
+                <div class="tabsLeft">
+                    <ul>
+                        <li><a href="#" class="active">Article</a></li>
+                        <li><a href="#">Talk</a></li>
+                    </ul>
+                </div>
+                <div id="simpleSearch">
+                    <input type="text" name="searchInput" id="searchInput" placeholder="Search Wikipedia" size="12" />
+                    <div id="submitSearch"></div>
+                </div>
+                <div class="tabsRight">
+                    <ul>
+                        <li><a href="#" class="active">Read</a></li>
+                        <li><a href="#">View source</a></li>
+                        <li><a href="#">View history</a></li>
+                    </ul>
+                </div>
 
-    <h2>Table visualization</h2>
+            </div>-->
+            <div class="article">
+                <h1>SPARQL visualizer playground</h1>
+                <p class="siteSub">The Test Cockpit for a Scholia Refactoring</p>
+                <p class="roleNote">
+                    This site layout is based on Wikidata, as mentioned in the Scholia Grant
+                    Proposal.
+                </p>
 
-    <div data-visualisation="Table">
-        <script type="application/json" data-content="Configuration">
-            {
-                query: `
-                    #Musikgenres
-                    #graph rendering could be slow due to large number of results
+                <p>Here are some visualizations.</p>
+                <div class="contentsPanel">
+                    <div class="contentsHeader">Contents</div>
+                    <ul>
+                        <li><span>1</span><a href="#image-content">Image</a></li>
+                        <li><span>2</span><a href="#table-content">Table</a></li>
+                    </ul>
+                </div>
 
-                    SELECT ?item ?itemLabel ?_subclass_of ?_subclass_ofLabel
-                    WHERE {
-                    ?item wdt:P31 wd:Q188451;
-                            wdt:P279 ?_subclass_of.
-                    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-                    } LIMIT 100
-                `
-            }
-        </script>
+                <h2 href="image-content">Image</h2>
+
+                <div class="" data-visualisation="Table">
+                    <script type="application/json" data-content="Configuration">
+                        {
+                            query: `
+                            #Musikgenres
+                            #graph rendering could be slow due to large number of results
+
+                            SELECT ?item ?itemLabel ?_subclass_of ?_subclass_ofLabel
+                            WHERE {
+                            ?item wdt:P31 wd:Q188451;
+                        wdt:P279 ?_subclass_of.
+                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                        } LIMIT 100
+                        `
+                        }
+                    </script>
+                </div>
+
+                <h2 href="table-content">Table</h2>
+                <div class="" data-visualisation="Table">
+                    <script type="application/json" data-content="Configuration">
+                        {
+                            query: `
+                            #Musikgenres
+                            #graph rendering could be slow due to large number of results
+
+                            SELECT ?item ?itemLabel ?_subclass_of ?_subclass_ofLabel
+                            WHERE {
+                            ?item wdt:P31 wd:Q188451;
+                        wdt:P279 ?_subclass_of.
+                        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                        } LIMIT 100
+                        `
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="pagefooter">
+                This is the testcockpit for Scholia Refactoring.
+                <div class="footerlinks">
+                    <a href="#">Scholia</a> <a href="#">Wikidata</a>
+                    <a href="#">Github Repository</a>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <link rel="stylesheet" href="index.css" />
     <script src="index.js" type="text/javascript"></script>
 </body>
