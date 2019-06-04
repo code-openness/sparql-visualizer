@@ -35,11 +35,14 @@ export function additionalSymbolEncoding (querry: string): string {
 
 export function queryNormalizer (query: string): string {
    const str: string = query.trim();
-   const removeDefaultViewomment: string  = str.replace(/\A*(\s+)*(#defaultView).*\n?/m, '');
-   const removeInspiredByomment: string  = removeDefaultViewomment.replace(/\A*(\s+)*(# Inspired).*\n?/m, '');
-   const removeNameComment: string = removeInspiredByomment.replace(/\A*(\s+)*(# Shubhanshu).*\n?/m, '');
+   const removeDefaultViewomment: string  = 
+   str.replace(/\A*(\s+)*(#defaultView).*\n?/m, '');
+   const removeInspiredByomment: string  = 
+   removeDefaultViewomment.replace(/\A*(\s+)*(# Inspired).*\n?/m, '');
+   const removeNameComment: string = 
+   removeInspiredByomment.replace(/\A*(\s+)*(# Shubhanshu).*\n?/m, '');
    const lineArray: string[] = removeNameComment.split(/\r?\n/);
-   const trimedArray: string[] = lineArray.map(s => s.trim());
+   const trimedArray: string[] = lineArray.map((s): string => s.trim());
    const newtext: string = trimedArray.join('\n');
    return newtext;
 }
