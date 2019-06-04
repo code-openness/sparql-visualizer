@@ -16,7 +16,7 @@ export function graphicalVisualizerUrlConstructor(querry: string, endpoint: stri
       res = endpoint  + 'embed.html#' + encodedQuery;
   } else {
      // Default: iFrame URL
-     encodedQuery = additionalSymbolEncoding(encodedQuery); //only needed for iFrame
+     encodedQuery = additionalSymbolEncoding(encodedQuery); //only needed for iFrame, for now
      res = endpoint + 'embed.html#' + encodedQuery;
   }
   return res;
