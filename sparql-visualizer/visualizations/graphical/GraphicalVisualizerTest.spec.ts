@@ -1,4 +1,4 @@
-import { graphicalVisualizerUrlConstructor, queryNormalizer } from './GraphicalVisualizer';
+import { graphicalVisualizerUrlConstructor, queryNormalizer } from './graphicalVisualizer';
 type VisualisationIdentifier = import ('./index.types').VisualisationIdentifier;
 type URLTypeIdentifier = import ('./index.types').URLTypeIdentifier;
 
