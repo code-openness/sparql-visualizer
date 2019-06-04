@@ -8,7 +8,7 @@ describe ('GraphicalVisualizer', () => {
     const endpoint: string = 'https://query.wikidata.org/';
     const urlType: URLTypeIdentifier = 'iFrame';
     const visualisationType: VisualisationIdentifier = 'BubbleChart';
-    const sparqlQuery = `SELECT ?count ?venue (SAMPLE(?venue_label_) AS ?venue_label) 
+    const sparqlQuery: string = `SELECT ?count ?venue (SAMPLE(?venue_label_) AS ?venue_label) 
 WITH {
   SELECT (COUNT(?work) as ?count) ?venue WHERE {
     ?work wdt:P50 wd:Q16733372 .
@@ -31,7 +31,7 @@ ORDER BY DESC(?count)  `;
       const endpoint: string = 'https://query.wikidata.org/';
       const urlType: URLTypeIdentifier = 'HTML';
       const visualisationType: VisualisationIdentifier = 'BubbleChart';
-      const sparqlQuery = `SELECT ?count ?venue (SAMPLE(?venue_label_) AS ?venue_label) 
+      const sparqlQuery: string = `SELECT ?count ?venue (SAMPLE(?venue_label_) AS ?venue_label) 
 WITH {
   SELECT (COUNT(?work) as ?count) ?venue WHERE {
     ?work wdt:P50 wd:Q16733372 .
