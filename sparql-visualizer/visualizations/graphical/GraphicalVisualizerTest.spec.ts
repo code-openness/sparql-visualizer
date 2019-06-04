@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import { additionalSymbolEncoding, constructGraphicalVisualizerUrl } from './graphicalVisualizer';
 type VisualisationIdentifier = import('./index.types').VisualisationIdentifier;
+=======
+import {graphicalVisualizerUrlConstructor, queryNormalizer} from './GraphicalVisualizer';
+type VisualisationIdentifier = import ('./index.types').VisualisationIdentifier;
+type URLTypeIdentifier = import ('./index.types').URLTypeIdentifier;
+>>>>>>> Querry string normalizer function added, removes # comments from beginning of querry if they exist as not needed for functioning URL to Wikidata
 
 <<<<<<< HEAD
 describe('GraphicalVisualizer', () => {
@@ -239,6 +245,7 @@ select ?year (count(?work) as ?number_of_publications) ?role where {
 }
 group by ?year ?role
 order by ?year`;
+//ts lint: disable next line
       const encodedURL: string="https://query.wikidata.org/#%23defaultView%3ABarChart%0A%23%20Inspired%20from%20LEGOLAS%20-%20http%3A%2F%2Fabel.lis.illinois.edu%2Flegolas%2F%0A%23%20Shubhanshu%20Mishra%2C%20Vetle%20Torvik%0Aselect%20%3Fyear%20(count(%3Fwork)%20as%20%3Fnumber_of_publications)%20%3Frole%20where%20%7B%0A%20%20%7B%0A%20%20%20%20select%20(str(%3Fyear_)%20as%20%3Fyear)%20(0%20as%20%3Fpages)%20(%22_%22%20as%20%3Frole)%20where%20%7B%0A%20%20%20%20%20%20%23%20default%20values%20%3D%200%0A%20%20%20%20%20%20%3Fyear_item%20wdt%3AP31%20wd%3AQ577%20.%20%0A%20%20%20%20%20%20%3Fyear_item%20wdt%3AP585%20%3Fdate%20.%0A%20%20%20%20%20%20bind(year(%3Fdate)%20as%20%3Fyear_)%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20select%20(min(%3Fyear_)%20as%20%3Fearliest_year)%20%20(max(%3Fyear_)%20as%20%3Flatest_year)%20where%20%7B%0A%20%20%20%20%20%20%20%20%20%20%3Fwork%20wdt%3AP50%20wd%3AQ16733372%20.%0A%20%20%20%20%20%20%20%20%20%20%3Fwork%20wdt%3AP577%20%3Fpublication_date%20.%20%0A%20%20%20%20%20%20%20%20%20%20bind(year(%3Fpublication_date)%20as%20%3Fyear_)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20bind(year(now())%2B1%20as%20%3Fnext_year)%0A%20%20%20%20%20%20filter%20(%3Fyear_%20%3E%3D%20%3Fearliest_year%20%26%26%20%3Fyear_%20%3C%3D%20%3Flatest_year)%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20union%20%7B%0A%20%20%7B%0A%20%20%20%20select%20%3Fwork%20(min(%3Fyears)%20as%20%3Fyear)%20(count(%3Fcoauthors)%20as%20%3Fnumber_of_authors)%20%3Fauthor_number%20where%20%7B%0A%20%20%20%20%20%20%3Fwork%20(p%3AP50%7Cp%3AP2093)%20%3Fauthor_statement%20.%20%0A%20%20%20%20%20%20%3Fauthor_statement%20ps%3AP50%20wd%3AQ16733372%20.%0A%20%20%20%20%20%20optional%20%7B%20%3Fauthor_statement%20pq%3AP1545%20%3Fauthor_number%20.%20%7D%0A%20%20%20%20%20%20%3Fwork%20(wdt%3AP50%7Cwdt%3AP2093)%20%3Fcoauthors%20.%20%0A%20%20%20%20%20%20%3Fwork%20wdt%3AP577%20%3Fdates%20.%0A%20%20%20%20%20%20bind(str(year(%3Fdates))%20as%20%3Fyears)%20.%0A%20%20%20%20%7D%0A%20%20%20%20group%20by%20%3Fwork%20%3Fauthor_number%0A%20%20%7D%0A%20%20bind(coalesce(if(%3Fnumber_of_authors%20%3D%201%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20'Solo%20author'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20if(xsd%3Ainteger(%3Fauthor_number)%20%3D%201%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'First%20author'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if(xsd%3Ainteger(%3Fauthor_number)%20%3D%20%3Fnumber_of_authors%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'Last%20author'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'Middle%20author')))%2C%20'Unknown')%0A%20%20%20%20%20%20%20as%20%3Frole)%0A%20%20%20%7D%0A%7D%0Agroup%20by%20%3Fyear%20%3Frole%0Aorder%20by%20%3Fyear";
       expect(graphicalVisualizerUrlConstructor(sparqlQuery, endpoint, visualisationType, urlType)).toEqual(encodedURL);
     });
@@ -390,4 +397,34 @@ order by ?year`;
       expect(graphicalVisualizerUrlConstructor(sparqlQuery, endpoint, visualisationType, urlType)).toEqual(encodedURL);
     });
 })
+<<<<<<< HEAD
 >>>>>>> Added an additional set of tests
+=======
+
+describe ('GraphicalVisualizer', () => {
+  it('should remove # and whitespace from query string', () => {
+    const sparqlQuery: string = `#defaultView:BarChart
+    # Inspired from LEGOLAS - http://abel.lis.illinois.edu/legolas/
+    # Shubhanshu Mishra, Vetle Torvik
+    select ?year (count(?work) as ?number_of_publications) ?role where {
+      {
+        select (str(?year_) as ?year) (0 as ?pages) ("_" as ?role) where {
+          # default values = 0
+          ?year_item wdt:P31 wd:Q577 . 
+          ?year_item wdt:P585 ?date .
+          bind(year(?date) as ?year_)
+          {
+            select (min(?year_) as ?earliest_year)  (max(?year_) as ?latest_year) where {
+              ?work wdt:P50 wd:Q16733372 .
+              ?work wdt:P577 ?publication_date . 
+              bind(year(?publication_date) as ?year_)
+            }
+          }
+          bind(year(now())+1 as ?next_year)
+          filter (?year_ >= ?earliest_year && ?year_ <= ?latest_year)
+        }
+      }`
+      expect(queryNormalizer(sparqlQuery)).toEqual('');
+  });
+})
+>>>>>>> Querry string normalizer function added, removes # comments from beginning of querry if they exist as not needed for functioning URL to Wikidata
