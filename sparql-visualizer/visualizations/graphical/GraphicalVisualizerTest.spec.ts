@@ -348,7 +348,7 @@ describe ('GraphicalVisualizer', () => {
           filter (?year_ >= ?earliest_year && ?year_ <= ?latest_year)
         }
       }`
-      /* tslint:enable: max-line-length */
+      
       const normaizedQuerry: string = `select ?year (count(?work) as ?number_of_publications) ?role where {
 {
 select (str(?year_) as ?year) (0 as ?pages) (\"_\" as ?role) where {
@@ -367,6 +367,7 @@ bind(year(now())+1 as ?next_year)
 filter (?year_ >= ?earliest_year && ?year_ <= ?latest_year)
 }
 }`
+/* tslint:enable: max-line-length */
       expect(queryNormalizer(sparqlQuery)).toEqual(normaizedQuerry);
   });
 })
