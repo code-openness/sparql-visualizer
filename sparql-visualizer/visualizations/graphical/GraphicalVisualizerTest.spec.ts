@@ -27,6 +27,59 @@ ORDER BY DESC(?count)  `;
     const encodedURL: string= "https://query.wikidata.org/embed.html#%23defaultView%3ABubbleChart%0ASELECT%20%3Fcount%20%3Fvenue%20%28SAMPLE%28%3Fvenue_label_%29%20AS%20%3Fvenue_label%29%20%0AWITH%20%7B%0A%20%20SELECT%20%28COUNT%28%3Fwork%29%20as%20%3Fcount%29%20%3Fvenue%20WHERE%20%7B%0A%20%20%20%20%3Fwork%20wdt%3AP50%20wd%3AQ16733372%20.%0A%20%20%20%20%3Fwork%20wdt%3AP1433%20%3Fvenue%20.%0A%20%20%7D%0A%20%20GROUP%20BY%20%3Fvenue%0A%7D%20AS%20%25counts%0AWHERE%20%7B%0A%20%20INCLUDE%20%25counts%0A%20%20%3Fvenue%20rdfs%3Alabel%20%3Flong_venue_label%20FILTER%28LANG%28%3Flong_venue_label%29%20%3D%20%27en%27%29%0A%20%20OPTIONAL%20%7B%20%3Fvenue%20wdt%3AP1813%20%3Fshort_name%20.%20%7D%0A%20%20BIND%28COALESCE%28%3Fshort_name%2C%20%3Flong_venue_label%29%20AS%20%3Fvenue_label_%29%0A%7D%0AGROUP%20BY%20%3Fvenue%20%3Fcount%0AORDER%20BY%20DESC%28%3Fcount%29%20%20";
     expect(graphicalVisualizerUrlConstructor(sparqlQuery, endpoint, visualisationType, urlType)).toEqual(encodedURL);
   });
+
+  it('should encode the second specified querry for the iFrame format', () => {
+    const endpoint: string = 'https://query.wikidata.org/';
+    const urlType: URLTypeIdentifier = 'iFrame';
+    const visualisationType: VisualisationIdentifier = 'BarChart';
+    const sparqlQuery: string = `# Inspired from LEGOLAS - http://abel.lis.illinois.edu/legolas/
+# Shubhanshu Mishra, Vetle Torvik
+select ?year (count(?work) as ?number_of_publications) ?role where {
+  {
+    select (str(?year_) as ?year) (0 as ?pages) ("_" as ?role) where {
+      # default values = 0
+      ?year_item wdt:P31 wd:Q577 . 
+      ?year_item wdt:P585 ?date .
+      bind(year(?date) as ?year_)
+      {
+        select (min(?year_) as ?earliest_year)  (max(?year_) as ?latest_year) where {
+          ?work wdt:P50 wd:Q16733372 .
+          ?work wdt:P577 ?publication_date . 
+          bind(year(?publication_date) as ?year_)
+        }
+      }
+      bind(year(now())+1 as ?next_year)
+      filter (?year_ >= ?earliest_year && ?year_ <= ?latest_year)
+    }
+  }
+  union {
+  {
+    select ?work (min(?years) as ?year) (count(?coauthors) as ?number_of_authors) ?author_number where {
+      ?work (p:P50|p:P2093) ?author_statement . 
+      ?author_statement ps:P50 wd:Q16733372 .
+      optional { ?author_statement pq:P1545 ?author_number . }
+      ?work (wdt:P50|wdt:P2093) ?coauthors . 
+      ?work wdt:P577 ?dates .
+      bind(str(year(?dates)) as ?years) .
+    }
+    group by ?work ?author_number
+  }
+  bind(coalesce(if(?number_of_authors = 1,
+            'Solo author',
+            if(xsd:integer(?author_number) = 1,
+               'First author',
+               if(xsd:integer(?author_number) = ?number_of_authors,
+                  'Last author',
+                  'Middle author'))), 'Unknown')
+       as ?role)
+   }
+}
+group by ?year ?role
+order by ?year`;
+    const encodedURL: string= "https://query.wikidata.org/embed.html#%23defaultView%3ABarChart%0A%23%20Inspired%20from%20LEGOLAS%20-%20http%3A%2F%2Fabel.lis.illinois.edu%2Flegolas%2F%0A%23%20Shubhanshu%20Mishra%2C%20Vetle%20Torvik%0Aselect%20%3Fyear%20%28count%28%3Fwork%29%20as%20%3Fnumber_of_publications%29%20%3Frole%20where%20%7B%0A%20%20%7B%0A%20%20%20%20select%20%28str%28%3Fyear_%29%20as%20%3Fyear%29%20%280%20as%20%3Fpages%29%20%28%22_%22%20as%20%3Frole%29%20where%20%7B%0A%20%20%20%20%20%20%23%20default%20values%20%3D%200%0A%20%20%20%20%20%20%3Fyear_item%20wdt%3AP31%20wd%3AQ577%20.%20%0A%20%20%20%20%20%20%3Fyear_item%20wdt%3AP585%20%3Fdate%20.%0A%20%20%20%20%20%20bind%28year%28%3Fdate%29%20as%20%3Fyear_%29%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20select%20%28min%28%3Fyear_%29%20as%20%3Fearliest_year%29%20%20%28max%28%3Fyear_%29%20as%20%3Flatest_year%29%20where%20%7B%0A%20%20%20%20%20%20%20%20%20%20%3Fwork%20wdt%3AP50%20wd%3AQ16733372%20.%0A%20%20%20%20%20%20%20%20%20%20%3Fwork%20wdt%3AP577%20%3Fpublication_date%20.%20%0A%20%20%20%20%20%20%20%20%20%20bind%28year%28%3Fpublication_date%29%20as%20%3Fyear_%29%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20bind%28year%28now%28%29%29%2B1%20as%20%3Fnext_year%29%0A%20%20%20%20%20%20filter%20%28%3Fyear_%20%3E%3D%20%3Fearliest_year%20%26%26%20%3Fyear_%20%3C%3D%20%3Flatest_year%29%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20union%20%7B%0A%20%20%7B%0A%20%20%20%20select%20%3Fwork%20%28min%28%3Fyears%29%20as%20%3Fyear%29%20%28count%28%3Fcoauthors%29%20as%20%3Fnumber_of_authors%29%20%3Fauthor_number%20where%20%7B%0A%20%20%20%20%20%20%3Fwork%20%28p%3AP50%7Cp%3AP2093%29%20%3Fauthor_statement%20.%20%0A%20%20%20%20%20%20%3Fauthor_statement%20ps%3AP50%20wd%3AQ16733372%20.%0A%20%20%20%20%20%20optional%20%7B%20%3Fauthor_statement%20pq%3AP1545%20%3Fauthor_number%20.%20%7D%0A%20%20%20%20%20%20%3Fwork%20%28wdt%3AP50%7Cwdt%3AP2093%29%20%3Fcoauthors%20.%20%0A%20%20%20%20%20%20%3Fwork%20wdt%3AP577%20%3Fdates%20.%0A%20%20%20%20%20%20bind%28str%28year%28%3Fdates%29%29%20as%20%3Fyears%29%20.%0A%20%20%20%20%7D%0A%20%20%20%20group%20by%20%3Fwork%20%3Fauthor_number%0A%20%20%7D%0A%20%20bind%28coalesce%28if%28%3Fnumber_of_authors%20%3D%201%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27Solo%20author%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20if%28xsd%3Ainteger%28%3Fauthor_number%29%20%3D%201%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27First%20author%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%28xsd%3Ainteger%28%3Fauthor_number%29%20%3D%20%3Fnumber_of_authors%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27Last%20author%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%27Middle%20author%27%29%29%29%2C%20%27Unknown%27%29%0A%20%20%20%20%20%20%20as%20%3Frole%29%0A%20%20%20%7D%0A%7D%0Agroup%20by%20%3Fyear%20%3Frole%0Aorder%20by%20%3Fyear";
+    expect(graphicalVisualizerUrlConstructor(sparqlQuery, endpoint, visualisationType, urlType)).toEqual(encodedURL);
+  });
+
   it('should encode the specified querry for the HTML format', () => {
       const endpoint: string = 'https://query.wikidata.org/';
       const urlType: URLTypeIdentifier = 'HTML';
