@@ -348,7 +348,6 @@ describe ('GraphicalVisualizer', () => {
           filter (?year_ >= ?earliest_year && ?year_ <= ?latest_year)
         }
       }`
-      
       const normaizedQuerry: string = `select ?year (count(?work) as ?number_of_publications) ?role where {
 {
 select (str(?year_) as ?year) (0 as ?pages) (\"_\" as ?role) where {
