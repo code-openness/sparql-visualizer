@@ -12,10 +12,7 @@ export class WikidataEndpoint {
     private readonly configuration: Required<WikidataEndpointConfig>;
 
     constructor(configuration: WikidataEndpointConfig = {}) {
-        this.configuration = {
-            ...DEFAULT_WIKIDATA_CONFIG,
-            ...configuration
-        };
+        this.configuration = { ...DEFAULT_WIKIDATA_CONFIG, ...configuration };
     }
 
     public getSPARQLQueryURL(): string {
