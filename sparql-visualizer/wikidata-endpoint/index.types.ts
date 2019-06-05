@@ -4,6 +4,4 @@ export interface WikidataEndpointConfig {
     port?: number;
 }
 
-export type HttpProtocol =
-    | 'http'
-    | 'https';
+export type HttpProtocol = 'http' | 'https';

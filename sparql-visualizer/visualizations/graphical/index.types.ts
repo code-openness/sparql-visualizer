@@ -1,4 +1,3 @@
-
 export type VisualisationIdentifier =
     | 'BubbleChart'
     | 'BarChart'
@@ -14,8 +13,9 @@ export type VisualisationIdentifier =
     | 'ImageGrid'
     | 'LineChart';
 
-export type URLTypeIdentifier =
-    | 'Wikilink'
-    | 'HTML'
-    | 'iFrame'
-    | 'SPARQL';
+export type URLTypeIdentifier = 'HTML' | 'iFrame';
+
+export type FindAndReplacePattern = {
+    key: RegExp;
+    value: string;
+};
