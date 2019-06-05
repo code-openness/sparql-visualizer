@@ -22,6 +22,20 @@
         "no-console": true,
         "no-trailing-whitespace": true,
         "trailing-comma": [true, "never"],
-        "max-line-length": [true, 100]
+        "max-line-length": [true, 100],
+        "no-non-null-assertion": true,
+        "no-parameter-reassignment": true,
+        "promise-function-async": true,
+        "unified-signatures": true,
+        "await-promise": true,
+        "function-constructor": true,
+        "no-bitwise": true,
+        "no-conditional-assignment": true,
+        "no-construct": true,
+        "no-return-await": true,
+        "no-unnecessary-class": true,
+        "no-var-keyword": true,
+        "prefer-object-spread": true,
+        "triple-equals": true
     }
 }
