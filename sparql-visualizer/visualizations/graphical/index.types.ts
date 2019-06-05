@@ -15,7 +15,7 @@ export type VisualisationIdentifier =
 
 export type URLTypeIdentifier = 'HTML' | 'iFrame';
 
-export type FindAndReplacePattern = {
+export interface FindAndReplacePattern {
     key: RegExp;
     value: string;
 };
