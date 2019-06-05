@@ -6,4 +6,8 @@
     const trimedArray: string[] = lineArray.map((queryLine: string) => queryLine.trim());
     const newtext: string = trimedArray.join('\n');
     return newtext;
+<<<<<<< HEAD
  }
+=======
+ }
+>>>>>>> WIP
