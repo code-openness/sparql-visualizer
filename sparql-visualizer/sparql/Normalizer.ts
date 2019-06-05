@@ -6,4 +6,10 @@
     const trimedArray: string[] = lineArray.map((queryLine: string) => queryLine.trim());
     const newtext: string = trimedArray.join('\n');
     return newtext;
+<<<<<<< HEAD
  }
+=======
+ }
+
+ 
+>>>>>>> folder and file structure changes + normalizer seperated
