@@ -3,7 +3,7 @@ type VisualisationIdentifier = import ('./index.types').VisualisationIdentifier;
 type URLTypeIdentifier = import ('./index.types').URLTypeIdentifier;
 
 describe ('GraphicalVisualizer', () => {
-  it('should encode the specified querry for the iFrame format', () => {
+  it('should encode the specified query for the iFrame format', () => {
     const endpoint: string = 'https://query.wikidata.org/';
     const urlType: URLTypeIdentifier = 'iFrame';
     const visualisationType: VisualisationIdentifier = 'BubbleChart';
@@ -29,7 +29,7 @@ ORDER BY DESC(?count)  `;
     expect(graphicalVisualizerUrlConstructor(sparqlQuery, endpoint, visualisationType, urlType)).toEqual(encodedURL);
   });
 
-  it('should encode the second specified querry for the iFrame format', () => {
+  it('should encode the second specified query for the iFrame format', () => {
     const endpoint: string = 'https://query.wikidata.org/';
     const urlType: URLTypeIdentifier = 'iFrame';
     const visualisationType: VisualisationIdentifier = 'BarChart';
@@ -83,7 +83,7 @@ order by ?year`;
   /* tslint:enable: max-line-length */
   });
 
-  it('should encode the specified querry for the HTML format', () => {
+  it('should encode the specified query for the HTML format', () => {
       const endpoint: string = 'https://query.wikidata.org/';
       const urlType: URLTypeIdentifier = 'HTML';
       const visualisationType: VisualisationIdentifier = 'BubbleChart';
@@ -109,7 +109,7 @@ ORDER BY DESC(?count)  `;
       expect(graphicalVisualizerUrlConstructor(sparqlQuery, endpoint, visualisationType, urlType)).toEqual(encodedURL);
   });
 
-  it('should encode the second specified querry for the HTML format', () => {
+  it('should encode the second specified query for the HTML format', () => {
     const endpoint: string = 'https://query.wikidata.org/';
     const urlType: URLTypeIdentifier = 'HTML';
     const visualisationType: VisualisationIdentifier = 'BarChart';
@@ -163,7 +163,7 @@ order by ?year`;
   /* tslint:enable: max-line-length */
   });
 
-    it('should encode the specified querry for the Wikilink format', () => {
+    it('should encode the specified query for the Wikilink format', () => {
         const endpoint: string = 'https://query.wikidata.org/';
         const urlType: URLTypeIdentifier = 'Wikilink';
         const visualisationType: VisualisationIdentifier = 'BubbleChart';
@@ -189,7 +189,7 @@ ORDER BY DESC(?count)  `;
         expect(graphicalVisualizerUrlConstructor(sparqlQuery, endpoint, visualisationType, urlType)).toEqual(encodedURL);
     });
 
-    it('should encode the second specified querry for the Wikilink format', () => {
+    it('should encode the second specified query for the Wikilink format', () => {
       const endpoint: string = 'https://query.wikidata.org/';
       const urlType: URLTypeIdentifier = 'Wikilink';
       const visualisationType: VisualisationIdentifier = 'BarChart';
@@ -243,7 +243,7 @@ order by ?year`;
     /* tslint:enable: max-line-length */
     });
 
-    it('should encode the specified querry for the SPARQL format', () => {
+    it('should encode the specified query for the SPARQL format', () => {
         const endpoint: string = 'https://query.wikidata.org/';
         const urlType: URLTypeIdentifier = 'SPARQL';
         const visualisationType: VisualisationIdentifier = 'BubbleChart';
@@ -268,7 +268,7 @@ ORDER BY DESC(?count)  `;
         // tslint:disable-next-line
         expect(graphicalVisualizerUrlConstructor(sparqlQuery, endpoint, visualisationType, urlType)).toEqual(encodedURL);
     });
-    it('should encode the second specified querry for the SPARQL format', () => {
+    it('should encode the second specified query for the SPARQL format', () => {
       const endpoint: string = 'https://query.wikidata.org/';
       const urlType: URLTypeIdentifier = 'SPARQL';
       const visualisationType: VisualisationIdentifier = 'BarChart';
@@ -347,7 +347,7 @@ describe ('GraphicalVisualizer', () => {
           filter (?year_ >= ?earliest_year && ?year_ <= ?latest_year)
         }
       }`
-      const normaizedQuerry: string = `select ?year (count(?work) as ?number_of_publications) ?role where {
+      const normaizedQuery: string = `select ?year (count(?work) as ?number_of_publications) ?role where {
 {
 select (str(?year_) as ?year) (0 as ?pages) (\"_\" as ?role) where {
 # default values = 0
@@ -366,6 +366,6 @@ filter (?year_ >= ?earliest_year && ?year_ <= ?latest_year)
 }
 }`
 /* tslint:enable: max-line-length */
-      expect(queryNormalizer(sparqlQuery)).toEqual(normaizedQuerry);
+      expect(queryNormalizer(sparqlQuery)).toEqual(normaizedQuery);
   });
 })
