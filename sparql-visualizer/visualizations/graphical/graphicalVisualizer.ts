@@ -1,5 +1,7 @@
 import { queryNormalizer } from '../../sparql/Normalizer';
 import { findAndReplacePatterns } from './EscapeTable';
+import { FindAndReplacePattern } from './index.types'
+let FindAndReplacePattern: FindAndReplacePattern;
 type VisualisationIdentifier = import("./index.types").VisualisationIdentifier;
 
 export function constructGraphicalVisualizerUrl(query: string, endpoint: string,
@@ -14,5 +16,7 @@ export function additionalSymbolEncoding (query: string): string {
       const key2: RegExp = findAndReplacePatterns[key].key;
       query = query.replace(key2 , value);
    }
+   // const res: string = query;
+   // findAndReplacePatterns.forEach(({ key, value }: FindAndReplacePattern): string => res.replace(key, value));
    return query;
 }
