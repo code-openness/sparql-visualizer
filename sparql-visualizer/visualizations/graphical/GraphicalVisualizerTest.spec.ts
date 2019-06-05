@@ -27,7 +27,7 @@ ORDER BY DESC(?count)  `;
         expect(
           constructGraphicalVisualizerUrl(sparqlQuery, endpoint, visualisationType)
         ).toEqual(encodedURL);
-/* tslint:enable: max-line-length */  
+/* tslint:enable: max-line-length */
     });
 
     it('should encode the second specified query for the HTML format', () => {
