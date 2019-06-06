@@ -1,7 +1,4 @@
 import { additionalSymbolEncoding, constructGraphicalVisualizerUrl } from './graphicalVisualizer';
-import { findAndReplacePatternsArray } from './EscapeTable';
-import { FindAndReplacePattern } from './index.types'
-let FindAndReplacePattern: FindAndReplacePattern;
 type VisualisationIdentifier = import('./index.types').VisualisationIdentifier;
 
 describe('GraphicalVisualizer', () => {
@@ -103,11 +100,6 @@ order by ?year`;
 });
 
 describe('Encoding of brakets and slash', () =>  {
-  it ('test', () => {
-    //let res: string = '';
-    Object.keys(findAndReplacePatternsArray).forEach(key => console.log(key, FindAndReplacePattern[key]));
-
-  });
   it('should replace ( with %28', () => {
     const exampleString: string = "abd(nklk";
     const expectedString: string = "abd%28nklk"
