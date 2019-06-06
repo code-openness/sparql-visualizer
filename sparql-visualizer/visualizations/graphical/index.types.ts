@@ -12,7 +12,3 @@ export type VisualisationIdentifier =
     | 'Map'
     | 'ImageGrid'
     | 'LineChart';
-
-export interface FindAndReplacePattern {
-    [key: string]: string;
-};

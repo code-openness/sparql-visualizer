@@ -62,3 +62,7 @@ typings/
 
 # production output of webpack
 dist
+
+# code editors
+.vscode/
+.idea/

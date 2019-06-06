@@ -1,7 +1,4 @@
 import { additionalSymbolEncoding, constructGraphicalVisualizerUrl } from './graphicalVisualizer';
-import { findAndReplacePatternsArray } from './EscapeTable';
-import { FindAndReplacePattern } from './index.types'
-let FindAndReplacePattern: FindAndReplacePattern;
 type VisualisationIdentifier = import('./index.types').VisualisationIdentifier;
 
 describe('GraphicalVisualizer', () => {
@@ -33,7 +30,7 @@ ORDER BY DESC(?count)  `;
         ).toEqual(encodedURL);
     });
 
-    it('should encode the second specified query for the HTML format', () => {
+    it('should encode the comments from a extensive query correctly', () => {
         const endpoint: string = 'https://query.wikidata.org/';
         const visualisationType: VisualisationIdentifier = 'BarChart';
         /* tslint:disable: max-line-length */
@@ -88,14 +85,21 @@ order by ?year`;
             constructGraphicalVisualizerUrl(sparqlQuery, endpoint, visualisationType)
           ).toEqual(encodedURL);
     });
+    it('should encode the specified string in correct order for URL' , () => {
+      const endpoint: string = 'https://query.wikidata.org/';
+      const visualisationType: VisualisationIdentifier = 'BubbleChart';
+      const string: string = `hello`;
+/* tslint:disable: max-line-length */
+      const encodedURL: string =
+          "https://query.wikidata.org/embed.html#%23defaultView%3ABubbleChart%0Ahello"
+          /* tslint:enable: max-line-length */
+          expect(
+        constructGraphicalVisualizerUrl(string, endpoint, visualisationType)
+      ).toEqual(encodedURL);
+  });
 });
 
 describe('Encoding of brakets and slash', () =>  {
-  it ('test', () => {
-    //let res: string = '';
-    Object.keys(findAndReplacePatternsArray).forEach(key => console.log(key, FindAndReplacePattern[key]));
-
-  });
   it('should replace ( with %28', () => {
     const exampleString: string = "abd(nklk";
     const expectedString: string = "abd%28nklk"
