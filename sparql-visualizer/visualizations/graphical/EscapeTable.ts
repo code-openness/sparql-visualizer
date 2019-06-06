@@ -1,7 +1,14 @@
-type FindAndReplacePattern = import("./index.types").FindAndReplacePattern;
-
+import { FindAndReplacePattern } from './index.types'
+let FindAndReplacePattern: FindAndReplacePattern;
+/*
 export const findAndReplacePatterns: FindAndReplacePattern[] = [
-    { key: /\(/gi, value: "%28" },
-    { key: /\)/gi, value: "%29" },
-    { key: /\'/gi, value: "%27" }
+    [key: '\(']: '%28',
+    { key: /\)/gi:'%29' ,
+    { key: /\'/gi, value: "%27"
+];*/
+
+export let findAndReplacePatternsArray: FindAndReplacePattern  []= [
+    {"(": "%28"},
+    {")": "%29"},
+    {"\'": "%27"}
 ];

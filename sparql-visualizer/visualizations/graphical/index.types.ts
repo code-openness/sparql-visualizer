@@ -13,9 +13,6 @@ export type VisualisationIdentifier =
     | 'ImageGrid'
     | 'LineChart';
 
-export type URLTypeIdentifier = 'HTML' | 'iFrame';
-
 export interface FindAndReplacePattern {
-    key: RegExp;
-    value: string;
+    [key: string]: string;
 };
