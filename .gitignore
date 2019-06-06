@@ -61,7 +61,7 @@ typings/
 .next
 
 # production output of webpack
-dist
+dist/
 
 # code editors
 .vscode/
