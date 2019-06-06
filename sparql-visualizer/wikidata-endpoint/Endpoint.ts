@@ -44,7 +44,4 @@ export class WikidataEndpoint {
         return LOCALHOST_IDENTIFIER.indexOf(host) >= 0;
     }
 }
-
-const test: number = 123;
-
 export default test;
