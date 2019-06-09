@@ -1,38 +1,21 @@
- /*type TableVisualisationIdentifier = import('./index.types').TableVisualisationIdentifier;*/
-/*
-export class queryForTable{
-    buildSPARQLquerry(endpoint:string, sparqlQuerry:string){  
-        let res = endpoint + '?query=' + escape(sparqlQuerry);  
-        return res;  
-    };
+import { SPARQLSelectResponse } from './index.types';
 
-sparqlRequest(): boolean {
-
-};    
-}*/
-
-class SPARQLQueryDispatcher {
-    endpoint: string;
-	constructor( endpoint: string ) {
-		this.endpoint = endpoint;
-	}
-
-	query( sparqlQuery: string ) {
-		const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQuery );
-		const headers = { 'Accept': 'application/sparql-results+json' };
-
-		return fetch( fullUrl, { headers } ).then( body => body.json() );
-	}
+export async function buildSPARQLquery(
+    endpoint: string,
+    sparqlQuery: string
+): Promise<SPARQLSelectResponse> {
+    const sparqlQueryUrl: string = endpoint + '?query=' + encodeURIComponent(sparqlQuery);
+    return await fetchSPARQLResponse(sparqlQueryUrl);
 }
 
-const endpointUrl = 'https://query.wikidata.org/sparql';
-const sparqlQuery = `#Katzen
-SELECT ?item ?itemLabel 
-WHERE 
-{
-  ?item wdt:P31 wd:Q146.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}`;
+export async function fetchSPARQLResponse(url: string): Promise<SPARQLSelectResponse> {
+    const headers = { Accept: 'application/sparql-results+json' };
+    let response: Response;
 
-const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
-queryDispatcher.query( sparqlQuery ).then( console.log );
+    try {
+        response = await fetch(url, { headers });
+    } catch (error) {
+        throw new Error(`Failed to get SPARQL Select Response: ${error}`);
+    }
+    return await response.json();
+}

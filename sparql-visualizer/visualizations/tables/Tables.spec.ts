@@ -1,35 +1,57 @@
-import { buildSPARQLquerry, sparqlRequest } from './Tables';
+import sinon, { SinonStub } from 'sinon';
+import { SPARQLSelectResponse } from './index.types';
+import { buildSPARQLquery, fetchSPARQLResponse } from './Tables';
+
 describe('TestTables', () => {
-    it('should create the encoded URI', () =>{
-            const endpointURL: string = 'https://query.wikidata.org/sparql';
-            const sparqlQuery: string = '#Katzen\n' +
-            'SELECT ?item ?itemLabel \n' +
-            'WHERE \n' +
-            '{\n' +
-            '  ?item wdt:P31 wd:Q146.\n' +
-            '  SERVICE wikibase:label { bd:serviceParam wikibase:language \"[AUTO_LANGUAGE],en\". }\n' +
-            '}';
-            const expectedUrl: string = 'https://query.wikidata.org/sparql?query=%23Katzen%0ASELECT%20%3Fitem%20%3FitemLabel%20%0AWHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP31%20wd%3AQ146.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%7D';
+    let fetchStub: SinonStub;
 
-            expect(buildSPARQLquerry(endpointURL, sparqlQuery)).toEqual(expectedUrl);
+    beforeEach(() => {
+        fetchStub = sinon.stub(window, 'fetch');
     });
 
-    
-    it('should log an error message, if request fails', () => {
-        if (sparqlRequest == false) {
-            console.log('request failed')  
+    afterEach(() => {
+        sinon.restore();
+    });
+    /** buildSPARQLqery  */
+    it('should build the correct SPARQL query', async () => {});
+
+    it('should pass the correct url and the correct headers to the request', async () => {
+        fetchStub.resolves({ json: sinon.fake() });
+
+        await fetchSPARQLResponse('');
+
+        expect(fetchStub.firstCall.args).toEqual([
+            '',
+            { headers: { Accept: 'application/sparql-results+json' } }
+        ]);
+    });
+
+    it('should throw an error if the request fails', async () => {
+        fetchStub.rejects();
+
+        expect(async () => await fetchSPARQLResponse('')).toThrow();
+    });
+
+    it('should return the json value of the received response', async () => {
+        const expectedQueryResult: SPARQLSelectResponse = {
+            head: {
+                vars: [],
+                link: []
+            },
+            results: {
+                bindings: []
+            }
         };
-                      
-    });
 
-    it('should ', async () => {
-        const response: Response = await fetch('www.google.de');
-        const results: JSON = await response.json();
+        fetchStub.resolves({
+            json: async (): Promise<SPARQLSelectResponse> => expectedQueryResult
+        });
 
+        const queryResult: SPARQLSelectResponse = await fetchSPARQLResponse('');
+
+        expect(queryResult).toEqual(expectedQueryResult);
     });
-    
 });
-
 
 /** interfaces durch JSON
  * results and head
