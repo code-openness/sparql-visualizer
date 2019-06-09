@@ -10,14 +10,3 @@ export function constructGraphicalVisualizerUrl(
     const encodedQuery: string = `${endpoint}embed.html#${encodeURIComponent(constructQuery)}`;
     return encodedQuery;
 }
-export function additionalSymbolEncoding(query: string): string {
-    let res: string = '';
-    res = query
-        .split("'")
-        .join('%27')
-        .split('(')
-        .join('%28')
-        .split(')')
-        .join('%29');
-    return res;
-}
