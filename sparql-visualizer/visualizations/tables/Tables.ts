@@ -19,3 +19,5 @@ export async function fetchSPARQLResponse(url: string): Promise<SPARQLSelectResp
     }
     return await response.json();
 }
+
+export async function buildHTMLtable() {}
