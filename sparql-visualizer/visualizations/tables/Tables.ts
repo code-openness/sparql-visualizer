@@ -20,4 +20,9 @@ export async function fetchSPARQLResponse(url: string): Promise<SPARQLSelectResp
     return await response.json();
 }
 
-export async function buildHTMLtable() {}
+export async function buildHTMLtable(endpoint: string, sparqlQuery: string) {
+    const jsonString = buildSPARQLquery(endpoint, sparqlQuery);
+
+    const table: HTMLTableElement = document.getElementById('myTable') as HTMLTableElement;
+    const row = table.insertRow(0);
+}

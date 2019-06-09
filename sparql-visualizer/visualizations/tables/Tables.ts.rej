@@ -1,0 +1,7 @@
+diff a/sparql-visualizer/visualizations/tables/Tables.ts b/sparql-visualizer/visualizations/tables/Tables.ts	(rejected hunks)
+@@ -23,3 +23 @@ export async function fetchSPARQLResponse(url: string): Promise<SPARQLSelectResp
+-export async function buildHTMLtable(){
+-
+-};
+\ No newline at end of file
++export async function buildHTMLtable() {}
