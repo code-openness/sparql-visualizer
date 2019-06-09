@@ -1,4 +1,4 @@
-import { queryNormalizer } from "./Normalizer";
+import { queryNormalizer } from './Normalizer';
 describe('QueryNormalizer', () => {
     it('should remove # and whitespace from query string', () => {
         /* tslint:disable: max-line-length */
