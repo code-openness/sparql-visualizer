@@ -24,8 +24,8 @@ export async function fetchSPARQLResponse(url: string): Promise<SPARQLSelectResp
 }
 
 export async function buildHTMLtable(endpoint: string, sparqlQuery: string) {
-    const jsonString: string = buildSPARQLquery(endpoint, sparqlQuery) as string;
-    const keyValues = [];
+    const jsonString: any = (buildSPARQLquery(endpoint, sparqlQuery) as unknown) as string;
+    const keyValues: any = [];
     for (let index = 0; index < jsonString.length; index++) {
         for (const key in jsonString[index]) {
             if (keyValues.indexOf(key) == -1) {

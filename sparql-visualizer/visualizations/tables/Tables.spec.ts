@@ -12,8 +12,10 @@ describe('TestTables', () => {
     afterEach(() => {
         sinon.restore();
     });
-    /** buildSPARQLqery  */
+
+    /**************** buildSPARQLquery() testen */
     it('should build the correct SPARQL query', async () => {});
+    /**************** */
 
     it('should pass the correct url and the correct headers to the request', async () => {
         fetchStub.resolves({ json: sinon.fake() });
@@ -51,6 +53,11 @@ describe('TestTables', () => {
 
         expect(queryResult).toEqual(expectedQueryResult);
     });
+
+    /************************** buildHTMLtable() testen*/
+    it('should return the key Values of the header', async () => {});
+
+    it('should add JSON data to table', async () => {});
 });
 
 /** interfaces durch JSON
