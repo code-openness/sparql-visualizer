@@ -1,3 +1,4 @@
+import { stringify } from 'querystring';
 import { SPARQLSelectResponse } from './index.types';
 
 export async function buildSPARQLquery(
@@ -23,12 +24,12 @@ export async function fetchSPARQLResponse(url: string): Promise<SPARQLSelectResp
 }
 
 export async function buildHTMLtable(endpoint: string, sparqlQuery: string) {
-    const jsonString = buildSPARQLquery(endpoint, sparqlQuery);
-    const headerValues = [];
+    const jsonString: string = buildSPARQLquery(endpoint, sparqlQuery) as string;
+    const keyValues = [];
     for (let index = 0; index < jsonString.length; index++) {
         for (const key in jsonString[index]) {
-            if (headerValues.indexOf(key) == -1) {
-                headerValues.push(key);
+            if (keyValues.indexOf(key) == -1) {
+                keyValues.push(key);
             }
         }
     }
@@ -36,17 +37,17 @@ export async function buildHTMLtable(endpoint: string, sparqlQuery: string) {
     const table = document.createElement('table');
 
     let tableRow = table.insertRow(-1);
-    for (let index = 0; index < headerValues.length; index++) {
+    for (let index = 0; index < keyValues.length; index++) {
         const tableHeader = document.createElement('th');
-        tableHeader.innerHTML = headerValues[index];
+        tableHeader.innerHTML = keyValues[index];
         tableRow.appendChild(tableHeader);
     }
     // add JSON data to the table
     for (let i = 0; i < jsonString.length; i++) {
         tableRow = table.insertRow(-1);
-        for (let j = 0; j < headerValues.length; j++) {
+        for (let j = 0; j < keyValues.length; j++) {
             const tabCell = tableRow.insertCell(-1);
-            tabCell.innerHTML = jsonString[i][headerValues[j]];
+            tabCell.innerHTML = jsonString[i][keyValues[j]];
         }
     }
 }
