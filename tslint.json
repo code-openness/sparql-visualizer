@@ -22,6 +22,37 @@
         "no-console": true,
         "no-trailing-whitespace": true,
         "trailing-comma": [true, "never"],
-        "max-line-length": [true, 100]
+        "max-line-length": [true, 100],
+        "no-non-null-assertion": true,
+        "no-parameter-reassignment": true,
+        "promise-function-async": true,
+        "unified-signatures": true,
+        "await-promise": true,
+        "function-constructor": true,
+        "no-bitwise": true,
+        "no-conditional-assignment": true,
+        "no-construct": true,
+        "no-return-await": true,
+        "no-unnecessary-class": true,
+        "no-var-keyword": true,
+        "prefer-object-spread": true,
+        "triple-equals": true,
+        "typedef-whitespace": [
+            true,
+            {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            },
+            {
+                "call-signature": "onespace",
+                "index-signature": "onespace",
+                "parameter": "onespace",
+                "property-declaration": "onespace",
+                "variable-declaration": "onespace"
+            }
+        ]
     }
 }
