@@ -10,5 +10,5 @@ export function constructGraphicalVisualizerUrl(query: string, endpoint: string,
 export function additionalSymbolEncoding (query: string): string {
   let res: string = '';
    res = query.split("'").join("%27").split("(").join("%28").split(")").join("%29");
-   return res;
+  return res;
 }
