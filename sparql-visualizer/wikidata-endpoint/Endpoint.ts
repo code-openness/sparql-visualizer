@@ -44,4 +44,3 @@ export class WikidataEndpoint {
         return LOCALHOST_IDENTIFIER.indexOf(host) >= 0;
     }
 }
-export default test;
