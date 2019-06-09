@@ -49,6 +49,4 @@ export async function buildHTMLtable(endpoint: string, sparqlQuery: string) {
             tabCell.innerHTML = jsonString[i][headerValues[j]];
         }
     }
-    // let rows = data.data.map(d => `<tr><td>${d.name}</td></tr>`);
-    return `<table>${rows}</table>`;
 }
