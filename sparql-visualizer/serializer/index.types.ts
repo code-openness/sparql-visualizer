@@ -1,4 +1,1 @@
-
-export interface VisualisationParameters = {
-
-};
+export interface VisualisationParameters {}

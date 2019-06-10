@@ -1,19 +1,19 @@
 import { extractParametersFromJsonElement } from './Serializer';
 
-type VisualisationParameters = import('./index.types').VisualisationParameters;
+const SPARQL_QUERY: string = 'SELECT * FROM *';
 
 describe('Serializer', () => {
     it('should read the parameters from the JSON', () => {
         const parameterJsonElement: HTMLElement = document.createElement(`
             <script type="application/json">
                 {
-                    query: ''
+                    query: ${SPARQL_QUERY}
                 }
             </script>
          `);
 
         expect(extractParametersFromJsonElement(parameterJsonElement)).toEqual({
-            query: ''
+            query: SPARQL_QUERY
         });
     });
 });
