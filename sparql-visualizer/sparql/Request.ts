@@ -3,7 +3,10 @@ import { queryNormalizer } from './Normalizer';
 
 type SPARQLSelectResponse = import('./index.types').SPARQLSelectResponse;
 
-export async function requestQueryResults(endpoint: string, sparqlQuery: string): Promise<any> {
+export async function requestQueryResults(
+    endpoint: string,
+    sparqlQuery: string
+): Promise<DataRow[]> {
     const requestUrl: string = buildRequestURL(endpoint, sparqlQuery);
     const sparqlResponse: SPARQLSelectResponse = await requestSPARQLSelectResponse(requestUrl);
     return sparqlResponseToDataTable(sparqlResponse);

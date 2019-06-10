@@ -1,7 +1,12 @@
-import { buildRequestURL, requestSPARQLSelectResponse, sparqlResponseToDataTable } from './Request';
+import {
+    buildRequestURL,
+    requestQueryResults,
+    requestSPARQLSelectResponse,
+    sparqlResponseToDataTable
+} from './Request';
 
 import sinon from 'sinon';
-import { SPARQLSelectResponse } from './index.types';
+import { DataRow, SPARQLSelectResponse } from './index.types';
 
 type SinonStub = import('sinon').SinonStub;
 
@@ -98,6 +103,25 @@ describe('SPARQL Request', () => {
             { Moep: 'f', Blubb: 'h', kljlk: 'v' },
             { Moep: 'm', Blubb: 'n', kljlk: 'k' }
         ]);
+    });
+
+    it('should return the requested data', async () => {
+        fetchStub.resolves(createStubResponse(JSON_RESPONSE));
+
+        const dataTable: DataRow[] = await requestQueryResults(WIKIDATA_URL, SPARQL_QUERY);
+
+        expect(dataTable).toEqual([
+            { Moep: 'f', Blubb: 'h', kljlk: 'v' },
+            { Moep: 'm', Blubb: 'n', kljlk: 'k' }
+        ]);
+    });
+
+    it('should pass the right request url to fetch', async () => {
+        fetchStub.resolves(createStubResponse(JSON_RESPONSE));
+
+        await requestQueryResults(WIKIDATA_URL, SPARQL_QUERY);
+
+        expect(fetchStub.firstCall.args[0]).toEqual('wikidata.org?query=%23%20sparql%20query');
     });
 
     function createStubResponse(returnValue: object = {}): Response {
