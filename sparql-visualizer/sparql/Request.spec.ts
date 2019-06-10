@@ -18,16 +18,12 @@ const JSON_FETCH_HEADERS: RequestInit = {
 };
 const JSON_RESPONSE: SPARQLSelectResponse = {
     head: {
-        vars: ['a', 'b'],
-        link: ['c', 'd']
+        link: ['c', 'd'],
+        vars: ['a', 'b']
     },
     results: {
         bindings: [
             {
-                Moep: {
-                    type: 'uri',
-                    value: 'f'
-                },
                 Blubb: {
                     type: 'literal',
                     value: 'h'
@@ -35,14 +31,13 @@ const JSON_RESPONSE: SPARQLSelectResponse = {
                 kljlk: {
                     type: 'literal',
                     value: 'v'
-                }
-            },
-
-            {
+                },
                 Moep: {
                     type: 'uri',
-                    value: 'm'
-                },
+                    value: 'f'
+                }
+            },
+            {
                 Blubb: {
                     type: 'literal',
                     value: 'n'
@@ -50,6 +45,10 @@ const JSON_RESPONSE: SPARQLSelectResponse = {
                 kljlk: {
                     type: 'literal',
                     value: 'k'
+                },
+                Moep: {
+                    type: 'uri',
+                    value: 'm'
                 }
             }
         ]
@@ -87,7 +86,7 @@ describe('SPARQL Request', () => {
     it('should throw an error if request fails', async () => {
         fetchStub.rejects();
 
-        expect(requestSPARQLSelectResponse(WIKIDATA_URL)).rejects;
+        expect(requestSPARQLSelectResponse(WIKIDATA_URL)).rejects.toBeTruthy();
     });
 
     it('should return a valid json response', async () => {
@@ -127,6 +126,7 @@ describe('SPARQL Request', () => {
     function createStubResponse(returnValue: object = {}): Response {
         return {
             json: sinon.stub().resolves(returnValue)
+            // tslint:disable-next-line
         } as any;
     }
 });

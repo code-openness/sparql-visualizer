@@ -18,7 +18,7 @@ export function buildRequestURL(endpoint: string, sparqlQuery: string): string {
 }
 
 export async function requestSPARQLSelectResponse(url: string): Promise<SPARQLSelectResponse> {
-    const headers = { Accept: 'application/sparql-results+json' };
+    const headers: RequestInit['headers'] = { Accept: 'application/sparql-results+json' };
     let response: Response;
 
     try {

@@ -53,6 +53,7 @@
                 "property-declaration": "onespace",
                 "variable-declaration": "onespace"
             }
-        ]
+        ],
+        "object-literal-sort-keys": false
     }
 }
