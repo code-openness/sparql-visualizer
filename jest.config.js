@@ -2,7 +2,6 @@ const COVERAGE_THRESHOLD_PERCENT = 95;
 
 module.exports = {
     preset: 'ts-jest',
-    testEnvironment: 'node',
     verbose: true,
     maxConcurrency: Infinity,
     coverageThreshold: {
