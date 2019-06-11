@@ -35,27 +35,38 @@
                     <li><a href="#table-content">Table</a></li>
                 </ul>
             </div>
-
             <h3 id="chart-content">Chart</h3>
-
             <div class="dropdown">
-                <button class="dropbtn">Farbe ändern</button>
-                <div class="dropdown-content">
-                    <a href="#">Farbe 1</a>
-                    <a href="#">Farbe 2</a>
-                    <a href="#">Farbe 3</a>
+                <div class="select-wrapper fa fa-angle-down">
+                    <select ref="select-color">
+                        <option selected disabled>Farbe ändern</option>
+                        <option>Farbe 1</option>
+                        <option>Farbe 2</option>
+                        <option>Farbe 3</option>
+                    </select>
                 </div>
             </div>
-
             <div class="dropdown">
-                <button class="dropbtn">Chart ändern</button>
-                <div class="dropdown-content">
-                    <a href="#">Chart 1</a>
-                    <a href="#">Chart 2</a>
-                    <a href="#">Chart 3</a>
+                <div class="select-wrapper fa fa-angle-down">
+                    <select ref="select-chart">
+                        <option selected disabled>Chart ändern</option>
+                        <option>Chart 1</option>
+                        <option>Chart 2</option>
+                        <option>Chart 3</option>
+                    </select>
                 </div>
             </div>
-
+            <div class="dropdown">
+                <div class="select-wrapper fa fa-angle-down">
+                    <select ref="select-endpoint">
+                        <option selected disabled>Endpoint ändern</option>
+                        <option>Endpoint 1</option>
+                        <option>Endpoint 2</option>
+                        <option>Endpoint 3</option>
+                    </select>
+                </div>
+            </div>
+            <button class="refresh-button">Refresh</button>
             <div class="visualisation-wrapper" data-visualisation="BubbleChart">
                 <script type="application/json" data-content="Configuration">
                     {
