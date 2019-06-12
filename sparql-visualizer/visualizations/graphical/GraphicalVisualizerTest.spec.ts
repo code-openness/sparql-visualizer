@@ -1,5 +1,5 @@
 import { constructGraphicalVisualizerUrl } from './graphicalVisualizer';
-type VisualisationIdentifier = import('./index.types').VisualisationIdentifier;
+type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
 
 describe('GraphicalVisualizer', () => {
     it('should encode the specified string in correct order for URL', () => {
