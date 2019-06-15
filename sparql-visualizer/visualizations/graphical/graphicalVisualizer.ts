@@ -1,5 +1,5 @@
 import { queryNormalizer } from '../../sparql/Normalizer';
-type VisualisationIdentifier = import('./index.types').VisualisationIdentifier;
+type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
 
 export function constructGraphicalVisualizerUrl(
     query: string,
