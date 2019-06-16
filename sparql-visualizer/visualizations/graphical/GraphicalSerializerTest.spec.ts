@@ -23,6 +23,7 @@ describe('Graphical Serializer', () => {
         const stringExample: string = `hello`;
 
         expect(
+            // tslint:disable-next-line: no-any
             createGraphElement(stringExample, visualisationType, endpoint as any)
         ).toBeInstanceOf(HTMLIFrameElement);
     });
