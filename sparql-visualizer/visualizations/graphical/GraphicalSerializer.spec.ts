@@ -9,11 +9,6 @@ describe('Graphical Serializer', () => {
     it('should return of type HTMLElement', () => {
         expect(composeIFrame(ENDPOINT_GRAPH_URL)).toBeInstanceOf(HTMLElement);
     });
-
-    it('should return of type IFrameElement', () => {
-        expect(composeIFrame(ENDPOINT_GRAPH_URL)).toBeInstanceOf(HTMLIFrameElement);
-    });
-
     it('should return a HTMLIFrameElement', () => {
         const endpoint: WikidataEndpoint = new WikidataEndpoint({});
         sinon.stub(endpoint, 'getSPARQLVisualisationURL').returns(ENDPOINT_GRAPH_URL);
@@ -28,5 +23,21 @@ describe('Graphical Serializer', () => {
         );
 
         expect(graphElement.matches('iframe')).toBeTruthy();
+    });
+    it('should contain the given src in iFrame', () => {
+        const endpoint: WikidataEndpoint = new WikidataEndpoint({});
+        sinon.stub(endpoint, 'getSPARQLVisualisationURL').returns(ENDPOINT_GRAPH_URL);
+
+        const visualisationType: VisualisationIdentifier = 'BubbleChart';
+        const stringExample: string = `hello`;
+
+        const graphElement: HTMLElement = createGraphElement(
+            stringExample,
+            visualisationType,
+            endpoint
+        );
+        expect(graphElement.getAttribute('src')).toEqual(
+            'https://query.wikidata.org/embed.html#%23defaultView%3ABubbleChart%0Ahello'
+        );
     });
 });
