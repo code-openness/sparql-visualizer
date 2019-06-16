@@ -1,4 +1,4 @@
-import { LOCALHOST_IDENTIFIER, WikidataEndpoint } from './Endpoint';
+import { WikidataEndpoint } from './Endpoint';
 
 type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
