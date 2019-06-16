@@ -1,6 +1,11 @@
 import { DataRow } from '../../sparql/index.types';
 
 export function createHTMLTable(table: DataRow[]): HTMLElement {
+    if (table.length === 0) {
+        console.warn('No values available');
+        return createElement('<table>No data available</table>');
+    }
+
     return createElement(`
         <table>
             <thead>${createTableHeadContent(table)}</thead>
@@ -30,8 +35,13 @@ export function tableRowToDataRow(row: DataRow): string {
     return `<tr>${tableRowValues}</tr>`;
 }
 
-function createElement(htmlString: string): HTMLElement {
-    const wrapper: HTMLElement = document.createElement('div');
+export function createElement(htmlString: string): HTMLElement {
+    const wrapper: HTMLDivElement = document.createElement('div');
     wrapper.innerHTML = htmlString.trim();
-    return wrapper.firstChild as HTMLElement;
+
+    if (!wrapper.firstElementChild) {
+        throw new Error('Could not create the HTML Element');
+    }
+
+    return wrapper.firstElementChild as HTMLElement;
 }
