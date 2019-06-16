@@ -8,6 +8,23 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 module.exports = merge(commonConfig, {
     mode: 'development',
     entry: path.resolve(PROJECT_ROOT, 'dev-playground/index.ts'),
+    module: {
+        rules: [
+            {
+                test: /\.(scss|sass)$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader"
+                    }, {
+                        loader: "sass-loader",
+                    }
+                ],
+                exclude: /node_modules/
+            }
+        ]
+    },
     output: {
         filename: 'index.js'
     },

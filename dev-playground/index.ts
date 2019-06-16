@@ -1,4 +1,5 @@
 import { Serializer } from '../sparql-visualizer/serializer/Serializer';
+import './style.scss';
 
 init();
 
