@@ -71,7 +71,7 @@ describe('SPARQL Request', () => {
 
     it('should compose the endpint and SPARQL query in the right URL', () => {
         expect(buildRequestURL(WIKIDATA_URL, SPARQL_QUERY)).toEqual(
-            'wikidata.org?query=%23%20sparql%20query'
+            'wikidata.org?sparqlquery=%23%20sparql%20query'
         );
     });
 
