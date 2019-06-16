@@ -1,17 +1,17 @@
 import { WikidataEndpoint } from '../../wikidata-endpoint';
-import { constructGraphicalVisualizerUrl } from '../graphical/graphicalVisualizer';
+import { constructGraphicalVisualizerUrl } from './GraphicalVisualizer';
 type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
 
-export function createGraphicalIFrame(urlString: string): HTMLElement {
+export function composeIFrame(urlString: string): HTMLElement {
     const iframe = document.createElement('iframe');
     iframe.src = urlString;
     return iframe as HTMLElement;
 }
-export function makeGraphicalUrl(
+export function createGraphElement(
     query: string,
     vizualizationType: VisualisationIdentifier,
     endpoint: WikidataEndpoint
-): string {
+): HTMLElement {
     const urlSting: string = constructGraphicalVisualizerUrl(query, vizualizationType, endpoint);
-    return urlSting;
+    return composeIFrame(urlSting);
 }
