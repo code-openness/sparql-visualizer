@@ -1,6 +1,6 @@
 import sinon, { SinonStubbedInstance } from 'sinon';
 import { WikidataEndpoint } from '../../wikidata-endpoint';
-import { constructGraphicalVisualizerUrl } from './GraphicalVisualizer';
+import { constructGraphicalVisualizerUrl } from '../graphical/GraphicalVisualizer';
 
 type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
 
