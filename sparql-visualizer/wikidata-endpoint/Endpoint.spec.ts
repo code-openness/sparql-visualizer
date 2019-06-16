@@ -4,8 +4,7 @@ type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
 const CUSTOM_ENDPOINT_CONFIG: WikidataEndpointConfig = {
     host: 'pik-wikidata.de',
-    httpProtocol: 'http',
-    port: 8181
+    httpProtocol: 'http'
 };
 
 describe('Wikidata Endpoint', () => {
@@ -18,19 +17,12 @@ describe('Wikidata Endpoint', () => {
     it('should return the default endpoints when nothing was procided', () => {
         expect(wikidataEndpoint.getConfiguration()).toEqual({
             host: 'wikidata.org',
-            httpProtocol: 'https',
-            port: 0
+            httpProtocol: 'https'
         });
     });
 
     it('should compose a valid sparql query endpoint url', () => {
         expect(wikidataEndpoint.getSPARQLQueryURL()).toEqual('https://query.wikidata.org');
-    });
-
-    it('should compose a valid sparql endpoint url with a port', () => {
-        wikidataEndpoint = new WikidataEndpoint(CUSTOM_ENDPOINT_CONFIG);
-
-        expect(wikidataEndpoint.getSPARQLQueryURL()).toEqual('http://query.pik-wikidata.de:8181');
     });
 
     it('should compose a valid sparql query visualization url', () => {
