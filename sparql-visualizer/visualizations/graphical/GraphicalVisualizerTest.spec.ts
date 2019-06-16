@@ -18,6 +18,7 @@ describe('GraphicalVisualizer', () => {
         const encodedURL: string =
             'https://query.wikidata.org/embed.html#%23defaultView%3ABubbleChart%0Ahello';
         expect(
+            // tslint:disable-next-line: no-any
             constructGraphicalVisualizerUrl(stringExample, visualisationType, endpoint as any)
         ).toEqual(encodedURL);
     });
