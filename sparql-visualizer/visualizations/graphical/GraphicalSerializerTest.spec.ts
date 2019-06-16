@@ -1,8 +1,7 @@
-import { SinonStubbedInstance } from 'sinon';
-import sinon from 'sinon';
-import { WikidataEndpoint } from '../..';
-import { VisualisationIdentifier } from '../index.types';
+import sinon, { SinonStubbedInstance } from 'sinon';
+import { WikidataEndpoint } from '../../wikidata-endpoint';
 import { composeIFrame, createGraphElement } from './GraphicalSerializer';
+type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
 
 const ENDPOINT_GRAPH_URL: string = 'https://query.wikidata.org/embed.html#';
 

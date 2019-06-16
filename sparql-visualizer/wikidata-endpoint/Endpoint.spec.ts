@@ -37,7 +37,7 @@ describe('Wikidata Endpoint', () => {
         wikidataEndpoint = new WikidataEndpoint(CUSTOM_ENDPOINT_CONFIG);
 
         expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
-            'http://query.pik-wikidata.de/embed.html#'
+            'http://pik-wikidata.de/embed.html#'
         );
     });
 });
