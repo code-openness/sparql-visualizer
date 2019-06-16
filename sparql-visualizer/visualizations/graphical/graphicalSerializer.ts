@@ -3,7 +3,7 @@ import { constructGraphicalVisualizerUrl } from './GraphicalVisualizer';
 type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
 
 export function composeIFrame(urlString: string): HTMLElement {
-    const iframe = document.createElement('iframe');
+    const iframe: HTMLIFrameElement = document.createElement('iframe');
     iframe.src = urlString;
     return iframe as HTMLElement;
 }
