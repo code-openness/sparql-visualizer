@@ -1,3 +1,5 @@
+import './style.scss';
+
 init();
 
 // TODO add EventListener for customization
