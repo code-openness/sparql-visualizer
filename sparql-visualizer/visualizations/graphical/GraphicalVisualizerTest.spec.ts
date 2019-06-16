@@ -8,7 +8,7 @@ describe('GraphicalVisualizer', () => {
         const stringExample: string = `hello`;
         const encodedURL: string =
             'https://query.wikidata.org/embed.html#%23defaultView%3ABubbleChart%0Ahello';
-        expect(constructGraphicalVisualizerUrl(stringExample, endpoint, visualisationType)).toEqual(
+        expect(constructGraphicalVisualizerUrl(stringExample, visualisationType, endpoint)).toEqual(
             encodedURL
         );
     });
