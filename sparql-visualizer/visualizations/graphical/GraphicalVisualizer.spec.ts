@@ -1,4 +1,3 @@
-import { type } from 'os';
 import sinon, { SinonStubbedInstance } from 'sinon';
 import { WikidataEndpoint } from '../../wikidata-endpoint/Endpoint';
 import { constructGraphicalVisualizerUrl } from './graphicalVisualizer';

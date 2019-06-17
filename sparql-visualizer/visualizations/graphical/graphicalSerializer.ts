@@ -1,5 +1,5 @@
 import { WikidataEndpoint } from '../../wikidata-endpoint';
-import { constructGraphicalVisualizerUrl } from './GraphicalVisualizer';
+import { constructGraphicalVisualizerUrl } from './graphicalVisualizer';
 type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
 
 export function composeIFrame(urlString: string): HTMLElement {
