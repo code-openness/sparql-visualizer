@@ -1,8 +1,7 @@
 import sinon from 'sinon';
-import { WikidataEndpoint } from '../../wikidata-endpoint';
-import { composeIFrame, createGraphElement } from './GraphicalSerializer';
+import { WikidataEndpoint } from '../../wikidata-endpoint/Endpoint';
+import { composeIFrame, createGraphElement } from './graphicalSerializer';
 type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
-
 const ENDPOINT_GRAPH_URL: string = 'https://query.wikidata.org/embed.html#';
 
 describe('Graphical Serializer', () => {
