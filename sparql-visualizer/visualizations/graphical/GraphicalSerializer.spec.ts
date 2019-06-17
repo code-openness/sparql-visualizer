@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import { WikidataEndpoint } from '../../wikidata-endpoint/Endpoint';
-import { composeIFrame, createGraphElement } from './graphicalSerializer';
+import { composeIFrame, createGraphElement } from './GraphicalSerializer';
 type VisualisationIdentifier = import('../index.types').VisualisationIdentifier;
 const ENDPOINT_GRAPH_URL: string = 'https://query.wikidata.org/embed.html#';
 
