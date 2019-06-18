@@ -16,6 +16,7 @@ describe('TableCreator', () => {
     let endpointStub: WikidataEndpoint;
 
     beforeEach(() => {
+        // tslint:disable-next-line: no-any
         endpointStub = sinon.createStubInstance(WikidataEndpoint) as any;
     });
 

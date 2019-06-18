@@ -128,6 +128,7 @@ describe('SPARQL Request', () => {
     function createStubResponse(returnValue: object = {}): Response {
         return {
             json: sinon.stub().resolves(returnValue)
+            // tslint:disable-next-line: no-any
         } as any;
     }
 });
