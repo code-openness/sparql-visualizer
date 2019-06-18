@@ -26,18 +26,9 @@ describe('TableCreator', () => {
     it('should call requestQueryResults', async () => {
         const requestQueryResultsStub: SinonStub = sinon.stub(SPARQLRequest, 'requestQueryResults');
         requestQueryResultsStub.yields();
-        const spy = (sinon.spy as unknown) as string;
+        const spy: string = (sinon.spy as unknown) as string;
         await createDataTable(endpointStub, spy);
-        expect(spy).toHaveBeenCalledWith;
-        requestQueryResultsStub.restore();
-    });
-
-    it('should call requestQueryResults returns a List', async () => {
-        const requestQueryResultsStub: SinonStub = sinon.stub(SPARQLRequest, 'requestQueryResults');
-        requestQueryResultsStub.yields();
-        const spy = (sinon.spy as unknown) as string;
-        await createDataTable(endpointStub, spy);
-        expect(spy).toContain;
+        sinon.assert.calledOnce(requestQueryResultsStub);
         requestQueryResultsStub.restore();
     });
 
