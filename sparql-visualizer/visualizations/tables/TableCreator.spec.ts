@@ -6,7 +6,6 @@ import * as HTMLTable from '../tables/Serializer';
 import { createDataTable } from './TableCreator';
 
 type SinonStub = import('sinon').SinonStub;
-// const SPARQL_QUERY: string = '# sparql query';
 const DATA_ROW_EXAMPLE: DataRow[] = [
     { Moep: 'f', Blubb: 'h', kljlk: 'v' },
     { Moep: 'm', Blubb: 'n', kljlk: 'k' }
@@ -27,18 +26,9 @@ describe('TableCreator', () => {
     it('should call requestQueryResults', async () => {
         const requestQueryResultsStub: SinonStub = sinon.stub(SPARQLRequest, 'requestQueryResults');
         requestQueryResultsStub.yields();
-        const spy = (sinon.spy as unknown) as string;
+        const spy: string = (sinon.spy as unknown) as string;
         await createDataTable(endpointStub, spy);
-        expect(spy).toHaveBeenCalledWith;
-        requestQueryResultsStub.restore();
-    });
-
-    it('should call requestQueryResults returns a List', async () => {
-        const requestQueryResultsStub: SinonStub = sinon.stub(SPARQLRequest, 'requestQueryResults');
-        requestQueryResultsStub.yields();
-        const spy = (sinon.spy as unknown) as string;
-        await createDataTable(endpointStub, spy);
-        expect(spy).toContain;
+        sinon.assert.calledOnce(requestQueryResultsStub);
         requestQueryResultsStub.restore();
     });
 
