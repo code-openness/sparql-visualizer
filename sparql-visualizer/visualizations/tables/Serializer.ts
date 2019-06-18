@@ -2,6 +2,7 @@ import { DataRow } from '../../sparql/index.types';
 
 export function createHTMLTable(table: DataRow[]): HTMLElement {
     if (table.length === 0) {
+        // tslint:disable-next-line: no-console
         console.warn('No values available');
         return createElement('<table>No data available</table>');
     }
