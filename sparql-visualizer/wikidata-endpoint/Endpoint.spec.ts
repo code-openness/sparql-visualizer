@@ -1,11 +1,10 @@
-import { LOCALHOST_IDENTIFIER, WikidataEndpoint } from './Endpoint';
+import { WikidataEndpoint } from './Endpoint';
 
 type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
 const CUSTOM_ENDPOINT_CONFIG: WikidataEndpointConfig = {
     host: 'pik-wikidata.de',
-    httpProtocol: 'http',
-    port: 8181
+    httpProtocol: 'http'
 };
 
 describe('Wikidata Endpoint', () => {
@@ -18,8 +17,7 @@ describe('Wikidata Endpoint', () => {
     it('should return the default endpoints when nothing was procided', () => {
         expect(wikidataEndpoint.getConfiguration()).toEqual({
             host: 'wikidata.org',
-            httpProtocol: 'https',
-            port: 0
+            httpProtocol: 'https'
         });
     });
 
@@ -27,28 +25,11 @@ describe('Wikidata Endpoint', () => {
         expect(wikidataEndpoint.getSPARQLQueryURL()).toEqual('https://query.wikidata.org');
     });
 
-    it('should compose a valid sparql endpoint url with a port', () => {
-        wikidataEndpoint = new WikidataEndpoint(CUSTOM_ENDPOINT_CONFIG);
-
-        expect(wikidataEndpoint.getSPARQLQueryURL()).toEqual('http://query.pik-wikidata.de:8181');
-    });
-
     it('should compose a valid sparql query visualization url', () => {
         wikidataEndpoint = new WikidataEndpoint(CUSTOM_ENDPOINT_CONFIG);
 
         expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
-            'http://query.pik-wikidata.de:8181/embed.html'
+            'http://pik-wikidata.de/embed.html#'
         );
-    });
-
-    it('should not prefix the host if it is localhost and use http', () => {
-        const urlsWithPort: string[] = LOCALHOST_IDENTIFIER.map(
-            (localhostIdentifier: string): WikidataEndpoint =>
-                new WikidataEndpoint({ host: localhostIdentifier, port: 8181 })
-        )
-            .map((endpoint: WikidataEndpoint): string => endpoint.getSPARQLVisualisationURL())
-            .filter((url: string): boolean => url.indexOf(':8181') < 0);
-
-        expect(urlsWithPort).toEqual([]);
     });
 });

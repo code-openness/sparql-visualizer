@@ -1,11 +1,8 @@
 type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
-export const LOCALHOST_IDENTIFIER: ReadonlyArray<string> = ['localhost', '127.0.0.1', '0.0.0.0'];
-
 export const DEFAULT_WIKIDATA_CONFIG: Required<WikidataEndpointConfig> = {
     host: 'wikidata.org',
-    httpProtocol: 'https',
-    port: 0
+    httpProtocol: 'https'
 };
 
 export class WikidataEndpoint {
@@ -20,7 +17,9 @@ export class WikidataEndpoint {
     }
 
     public getSPARQLVisualisationURL(): string {
-        return `${this.getBaseUrl()}/embed.html`;
+        const { httpProtocol, host } = this.configuration;
+
+        return `${httpProtocol}://${host}/embed.html#`;
     }
 
     public getConfiguration(): Readonly<WikidataEndpointConfig> {
@@ -28,19 +27,7 @@ export class WikidataEndpoint {
     }
 
     private getBaseUrl(): string {
-        const { host, httpProtocol, port } = this.configuration;
-        const portString: string = port !== 0 ? `:${port}` : '';
-
-        if (this.isLocalhost()) {
-            return `http://${host}${portString}`;
-        } else {
-            return `${httpProtocol}://query.${host}${portString}`;
-        }
-    }
-
-    private isLocalhost(): boolean {
-        const { host } = this.configuration;
-
-        return LOCALHOST_IDENTIFIER.indexOf(host) >= 0;
+        const { host, httpProtocol } = this.configuration;
+        return `${httpProtocol}://query.${host}`;
     }
 }
