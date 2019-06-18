@@ -69,9 +69,9 @@ describe('SPARQL Request', () => {
         sinon.restore();
     });
 
-    it('should compose the endpint and SPARQL query in the right URL', () => {
+    it('should compose the endpoint and SPARQL query in the right URL', () => {
         expect(buildRequestURL(WIKIDATA_URL, SPARQL_QUERY)).toEqual(
-            'wikidata.org?query=%23%20sparql%20query'
+            'wikidata.org/sparql?query=%23%20sparql%20query'
         );
     });
 
@@ -120,13 +120,15 @@ describe('SPARQL Request', () => {
 
         await requestQueryResults(WIKIDATA_URL, SPARQL_QUERY);
 
-        expect(fetchStub.firstCall.args[0]).toEqual('wikidata.org?query=%23%20sparql%20query');
+        expect(fetchStub.firstCall.args[0]).toEqual(
+            'wikidata.org/sparql?query=%23%20sparql%20query'
+        );
     });
 
     function createStubResponse(returnValue: object = {}): Response {
         return {
             json: sinon.stub().resolves(returnValue)
-            // tslint:disable-next-line
+            // tslint:disable-next-line: no-any
         } as any;
     }
 });

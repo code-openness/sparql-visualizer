@@ -14,7 +14,7 @@ export async function requestQueryResults(
 
 export function buildRequestURL(endpoint: string, sparqlQuery: string): string {
     const encodedQuery: string = encodeURIComponent(queryNormalizer(sparqlQuery));
-    return `${endpoint}?query=${encodedQuery}`;
+    return `${endpoint}/sparql?query=${encodedQuery}`;
 }
 
 export async function requestSPARQLSelectResponse(url: string): Promise<SPARQLSelectResponse> {
