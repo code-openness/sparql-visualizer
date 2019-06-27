@@ -22,7 +22,7 @@
         "no-console": true,
         "no-trailing-whitespace": true,
         "trailing-comma": [true, "never"],
-        "max-line-length": [true, 100],
+        "max-line-length": [true, 120],
         "no-non-null-assertion": true,
         "no-parameter-reassignment": true,
         "promise-function-async": true,

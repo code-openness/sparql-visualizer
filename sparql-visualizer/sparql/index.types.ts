@@ -22,12 +22,7 @@ export interface SPARQLDataRow {
     [key: string]: RDFTerm;
 }
 
-export type RDFTerm =
-    | RDFTermIRI
-    | RDFTermLiteral
-    | RDFTermLiteralLanguage
-    | RDFTermLiteralDatatype
-    | RDFTermBlankNode;
+export type RDFTerm = RDFTermIRI | RDFTermLiteral | RDFTermLiteralLanguage | RDFTermLiteralDatatype | RDFTermBlankNode;
 
 export interface RDFTermIRI {
     type: 'uri';

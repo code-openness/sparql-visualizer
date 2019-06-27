@@ -15,11 +15,7 @@ describe('Graphical Serializer', () => {
 
         const visualisationType: VisualisationIdentifier = 'BubbleChart';
         const stringExample: string = 'hello';
-        const graphElement: HTMLElement = createGraphElement(
-            stringExample,
-            visualisationType,
-            endpoint
-        );
+        const graphElement: HTMLElement = createGraphElement(stringExample, visualisationType, endpoint);
         expect(graphElement.matches('iframe')).toBeTruthy();
     });
     it('should contain the given src in iFrame', () => {
@@ -29,11 +25,7 @@ describe('Graphical Serializer', () => {
         const visualisationType: VisualisationIdentifier = 'BubbleChart';
         const stringExample: string = `hello`;
 
-        const graphElement: HTMLElement = createGraphElement(
-            stringExample,
-            visualisationType,
-            endpoint
-        );
+        const graphElement: HTMLElement = createGraphElement(stringExample, visualisationType, endpoint);
         expect(graphElement.getAttribute('src')).toEqual(
             'https://query.wikidata.org/embed.html#%23defaultView%3ABubbleChart%0Ahello'
         );

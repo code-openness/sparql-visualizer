@@ -6,10 +6,7 @@ import * as HTMLTable from '../tables/Serializer';
 import { createDataTable } from './TableCreator';
 
 type SinonStub = import('sinon').SinonStub;
-const DATA_ROW_EXAMPLE: DataRow[] = [
-    { Moep: 'f', Blubb: 'h', kljlk: 'v' },
-    { Moep: 'm', Blubb: 'n', kljlk: 'k' }
-];
+const DATA_ROW_EXAMPLE: DataRow[] = [{ Moep: 'f', Blubb: 'h', kljlk: 'v' }, { Moep: 'm', Blubb: 'n', kljlk: 'k' }];
 
 describe('TableCreator', () => {
     let endpointStub: WikidataEndpoint;

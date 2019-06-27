@@ -8,8 +8,6 @@ export function constructGraphicalVisualizerUrl(
     endpoint: WikidataEndpoint
 ): string {
     const constructQuery: string = `#defaultView:${vizualisationType}\n${queryNormalizer(query)}`;
-    const encodeQuery: string = `${endpoint.getSPARQLVisualisationURL()}${encodeURIComponent(
-        constructQuery
-    )}`;
+    const encodeQuery: string = `${endpoint.getSPARQLVisualisationURL()}${encodeURIComponent(constructQuery)}`;
     return encodeQuery;
 }

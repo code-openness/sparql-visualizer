@@ -6,7 +6,6 @@ import { createElement } from './DomAccess';
 type VisualisationIdentifier = import('../visualizations/index.types').VisualisationIdentifier;
 
 export const CSS_CLASSES: { [key: string]: string } = {
-    WRAPPER: 'sparql-visualizer__wrapper',
     GRAPHIC: 'sparql-visualizer__graph'
 };
 
@@ -14,9 +13,7 @@ export class Serializer {
     private endpoint: WikidataEndpoint = new WikidataEndpoint();
 
     public async serialize(): Promise<void> {
-        const elementsToVisualize: NodeListOf<HTMLElement> = document.querySelectorAll(
-            '[data-visualization]'
-        );
+        const elementsToVisualize: NodeListOf<HTMLElement> = document.querySelectorAll('[data-visualization]');
 
         elementsToVisualize.forEach((element: HTMLElement) => this.visualize(element));
     }
@@ -30,6 +27,8 @@ export class Serializer {
         const { endpoint } = this;
         const { visualizationType, query } = this.getParameters(element);
 
+        const graphContainer: HTMLElement = createElement(`<div class="${CSS_CLASSES.GRAPHIC}"></div>`);
+
         if (visualizationType === 'Table') {
             let tableElement: HTMLElement;
 
@@ -39,20 +38,20 @@ export class Serializer {
                 tableElement = createElement('<h1>Something went wrong</h1>');
             }
 
-            element.appendChild(tableElement);
+            graphContainer.appendChild(tableElement);
         } else {
             const iframe: HTMLElement = createGraphElement(query, visualizationType, endpoint);
 
             iframe.classList.add('sparql-visualizer__resp-iframe');
             element.classList.add('sparql-visualizer__resp-container');
 
-            element.appendChild(iframe);
+            graphContainer.appendChild(iframe);
         }
+
+        element.appendChild(graphContainer);
     }
 
-    private getParameters(
-        element: HTMLElement
-    ): { visualizationType: VisualisationIdentifier; query: string } {
+    private getParameters(element: HTMLElement): { visualizationType: VisualisationIdentifier; query: string } {
         const visualizationType: VisualisationIdentifier = element.getAttribute(
             'data-visualization'
         ) as VisualisationIdentifier;

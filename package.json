@@ -17,6 +17,11 @@
         "start": "webpack-dev-server --hot --config webpack/webpack.development.config.js",
         "test": "jest --coverage"
     },
+    "prettier": {
+        "printWidth": 120,
+        "tabWidth": 4,
+        "singleQuote": true
+    },
     "husky": {
         "hooks": {
             "pre-commit": "lint-staged"

@@ -64,9 +64,7 @@ describe('Table Serializer', () => {
     });
 
     it('should contain one or more rows in the table body', () => {
-        expect(tableElement.querySelectorAll('table > tbody > tr').length).toEqual(
-            DATA_ROWS.length
-        );
+        expect(tableElement.querySelectorAll('table > tbody > tr').length).toEqual(DATA_ROWS.length);
     });
 
     it('should contain all provided values of each row in the body', () => {
