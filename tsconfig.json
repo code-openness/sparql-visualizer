@@ -6,7 +6,7 @@
         "target": "es5",
         "module": "esnext",
         "lib": ["dom", "es5", "es2015.promise", "es2015.core"],
-        "importHelpers": false,
+        "importHelpers": true,
         "moduleResolution": "node",
         "sourceMap": true,
         "alwaysStrict": true,
