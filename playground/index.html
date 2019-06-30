@@ -54,82 +54,49 @@
                 </div>
             </div>
 
-            <div class="visualisation-wrapper" data-visualisation="BubbleChart">
-                <script type="application/json" data-content="Configuration">
-                    {
-                        query:
-                        `
-                        #
-                        Musikgenres
-                        #
-                        graph
-                        rendering
-                        could
-                        be
-                        slow
-                        due
-                        to
-                        large
-                        number
-                        of
-                        results
-
-                        SELECT
-                        ?
-                        item
-                        ?
-                        itemLabel
-                        ?
-                        _subclass_of
-                        ?
-                        _subclass_ofLabel
-                        WHERE {
-                        ?item wdt:P31 wd: Q188451;
-                    wdt: P279 ?_subclass_of.
-                    SERVICE wikibase: label {bd: serviceParam wikibase:language "[AUTO_LANGUAGE],en".}
-                    } LIMIT 100
-                    `
+            <div class="visualisation-wrapper" data-visualization="LineChart">
+                <script type="text/plain" data-content="Configuration">
+                    SELECT ?year (COUNT(?work) AS ?number_of_works) ?organization ?organizationLabel
+                    WHERE {
+                      {
+                        SELECT DISTINCT ?year ?work ?organization WHERE {
+                          hint:Query hint:optimizer "None".
+                          VALUES ?organization {   wd:Q1269766  wd:Q193196   }
+                          ?author wdt:P108 | wdt:P463 | (wdt:P1416/wdt:P361*) ?organization .
+                          ?work wdt:P50 ?author .
+                          ?work wdt:P577 ?publication_date .
+                          BIND(STR(YEAR(?publication_date)) AS ?year)
+                        }
+                        GROUP BY ?work ?year ?organization
+                      }
+                      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
                     }
+                    GROUP BY ?year ?organization ?organizationLabel
+                    ORDER BY ?year
                 </script>
             </div>
 
             <h3 id="table-content">Table</h3>
-            <div class="" data-visualisation="Table">
+            <div class="" data-visualization="Table">
                 <script type="application/json" data-content="Configuration">
-                    {
-                        query:
-                        `
-                        #
-                        Musikgenres
-                        #
-                        graph
-                        rendering
-                        could
-                        be
-                        slow
-                        due
-                        to
-                        large
-                        number
-                        of
-                        results
-
-                        SELECT
-                        ?
-                        item
-                        ?
-                        itemLabel
-                        ?
-                        _subclass_of
-                        ?
-                        _subclass_ofLabel
-                        WHERE {
-                        ?item wdt:P31 wd: Q188451;
-                    wdt: P279 ?_subclass_of.
-                    SERVICE wikibase: label {bd: serviceParam wikibase:language "[AUTO_LANGUAGE],en".}
-                    } LIMIT 100
-                    `
+                    SELECT ?year (COUNT(?work) AS ?number_of_works) ?organization ?organizationLabel
+                    WHERE {
+                      {
+                        SELECT DISTINCT ?year ?work ?organization WHERE {
+                          hint:Query hint:optimizer "None".
+                          VALUES ?organization {   wd:Q1269766  wd:Q193196   }
+                          ?author wdt:P108 | wdt:P463 | (wdt:P1416/wdt:P361*) ?organization .
+                          ?work wdt:P50 ?author .
+                          ?work wdt:P577 ?publication_date .
+                          BIND(STR(YEAR(?publication_date)) AS ?year)
+                        }
+                        GROUP BY ?work ?year ?organization
+                      }
+                      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
                     }
+                    GROUP BY ?year ?organization ?organizationLabel
+                    ORDER BY ?year
+                    LIMIT 10
                 </script>
             </div>
         </div>

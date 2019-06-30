@@ -17,9 +17,7 @@ export class WikidataEndpoint {
     }
 
     public getSPARQLVisualisationURL(): string {
-        const { httpProtocol, host } = this.configuration;
-
-        return `${httpProtocol}://${host}/embed.html#`;
+        return `${this.getBaseUrl()}/embed.html`;
     }
 
     public getConfiguration(): Readonly<WikidataEndpointConfig> {

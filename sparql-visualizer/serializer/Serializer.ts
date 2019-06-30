@@ -1,7 +1,7 @@
-import { createGraphElement } from '../visualizations/graphical/GraphicalSerializer';
-import { createDataTable } from '../visualizations/tables/TableCreator';
 import { WikidataEndpoint, WikidataEndpointConfig } from '../wikidata-endpoint';
 import { createElement } from './DomAccess';
+import { selectMatchingVisualizationCallback } from './VisualizationRoutes';
+import { VisualizationFunction } from './index.types';
 
 type VisualisationIdentifier = import('../visualizations/index.types').VisualisationIdentifier;
 
@@ -27,26 +27,16 @@ export class Serializer {
         const { endpoint } = this;
         const { visualizationType, query } = this.getParameters(element);
 
+        const createVisualization: VisualizationFunction = selectMatchingVisualizationCallback(visualizationType);
+
+        const visualization: HTMLElement = await createVisualization({
+            endpoint,
+            query,
+            visualizationType
+        });
+
         const graphContainer: HTMLElement = createElement(`<div class="${CSS_CLASSES.GRAPHIC}"></div>`);
-
-        if (visualizationType === 'Table') {
-            let tableElement: HTMLElement;
-
-            try {
-                tableElement = await createDataTable(endpoint, query);
-            } catch (error) {
-                tableElement = createElement('<h1>Something went wrong</h1>');
-            }
-
-            graphContainer.appendChild(tableElement);
-        } else {
-            const iframe: HTMLElement = createGraphElement(query, visualizationType, endpoint);
-
-            iframe.classList.add('sparql-visualizer__resp-iframe');
-            element.classList.add('sparql-visualizer__resp-container');
-
-            graphContainer.appendChild(iframe);
-        }
+        graphContainer.appendChild(visualization);
 
         element.appendChild(graphContainer);
     }
