@@ -1,44 +1,55 @@
-import sinon from 'sinon';
-import { DataRow } from '../../sparql/index.types';
-import * as SPARQLRequest from '../../sparql/Request';
-import { WikidataEndpoint } from '../../wikidata-endpoint';
 import * as HTMLTable from '../tables/Serializer';
-import { createDataTable } from './TableCreator';
+import * as SPARQLRequest from '../../sparql/Request';
+import sinon from 'sinon';
+import { WikidataEndpoint } from '../../wikidata-endpoint';
+import { createElement } from '../../serializer/DomAccess';
+import { createTableElement } from './TableCreator';
 
+type DataRow = import('../../sparql/index.types').DataRow;
 type SinonStub = import('sinon').SinonStub;
-const DATA_ROW_EXAMPLE: DataRow[] = [
-    { Moep: 'f', Blubb: 'h', kljlk: 'v' },
-    { Moep: 'm', Blubb: 'n', kljlk: 'k' }
-];
+type SinonStubbedInstance<ClassType> = import('sinon').SinonStubbedInstance<ClassType>;
+
+const SPARQL_QUERY: string = 'some-sparql-query';
+const SPARQL_QUERY_URL: string = 'https://query.wikidata.org/sparql?query';
+const DATA_TABLE: DataRow[] = [{ Moep: 'f', Blubb: 'h', kljlk: 'v' }, { Moep: 'm', Blubb: 'n', kljlk: 'k' }];
+const HTML_TABLE: HTMLElement = createElement(`<table id="sparql-table"></table>`);
 
 describe('TableCreator', () => {
-    let endpointStub: WikidataEndpoint;
+    let endpointStub: SinonStubbedInstance<WikidataEndpoint>;
+    let requestQueryResultsStub: SinonStub;
+    let createHTMLTableStub: SinonStub;
+    let tableElement: HTMLElement;
 
-    beforeEach(() => {
-        // tslint:disable-next-line: no-any
-        endpointStub = sinon.createStubInstance(WikidataEndpoint) as any;
+    beforeEach(async () => {
+        endpointStub = sinon.createStubInstance(WikidataEndpoint);
+        endpointStub.getSPARQLQueryURL.returns(SPARQL_QUERY_URL);
+
+        requestQueryResultsStub = sinon.stub(SPARQLRequest, 'requestQueryResults');
+        requestQueryResultsStub.resolves(DATA_TABLE);
+
+        createHTMLTableStub = sinon.stub(HTMLTable, 'createHTMLTable');
+        createHTMLTableStub.returns(HTML_TABLE);
+
+        tableElement = await createTableElement({
+            endpoint: (endpointStub as unknown) as WikidataEndpoint,
+            query: SPARQL_QUERY,
+            visualizationType: 'Table'
+        });
     });
 
     afterEach(() => {
         sinon.restore();
     });
 
-    it('should call requestQueryResults', async () => {
-        const requestQueryResultsStub: SinonStub = sinon.stub(SPARQLRequest, 'requestQueryResults');
-        requestQueryResultsStub.yields();
-        const spy: string = (sinon.spy as unknown) as string;
-        await createDataTable(endpointStub, spy);
-        sinon.assert.calledOnce(requestQueryResultsStub);
-        requestQueryResultsStub.restore();
+    it('should request the table data with the provided query and query url from the endpoint', async () => {
+        expect(requestQueryResultsStub.firstCall.args).toEqual([SPARQL_QUERY_URL, SPARQL_QUERY]);
     });
 
-    it('should call crateHTMLTable', async () => {
-        const createHTMLTableStub: SinonStub = sinon.stub(HTMLTable, 'createHTMLTable');
-        const requestQueryResultsStub: SinonStub = sinon.stub(SPARQLRequest, 'requestQueryResults');
-        requestQueryResultsStub.returns(DATA_ROW_EXAMPLE);
+    it('should create the HTML table with the received table data', async () => {
+        expect(createHTMLTableStub.firstCall.args).toEqual([DATA_TABLE]);
+    });
 
-        await createDataTable(endpointStub, '');
-
-        sinon.assert.calledOnce(createHTMLTableStub);
+    it('should return the assembled HTML table', () => {
+        expect(tableElement).toEqual(HTML_TABLE);
     });
 });

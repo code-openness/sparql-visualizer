@@ -28,8 +28,6 @@ describe('Wikidata Endpoint', () => {
     it('should compose a valid sparql query visualization url', () => {
         wikidataEndpoint = new WikidataEndpoint(CUSTOM_ENDPOINT_CONFIG);
 
-        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual(
-            'http://pik-wikidata.de/embed.html#'
-        );
+        expect(wikidataEndpoint.getSPARQLVisualisationURL()).toEqual('http://query.pik-wikidata.de/embed.html');
     });
 });

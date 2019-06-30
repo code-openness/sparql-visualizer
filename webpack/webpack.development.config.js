@@ -7,7 +7,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 
 module.exports = merge(commonConfig, {
     mode: 'development',
-    entry: path.resolve(PROJECT_ROOT, 'dev-playground/index.ts'),
+    entry: path.resolve(PROJECT_ROOT, 'playground/index.ts'),
     module: {
         rules: [
             {
@@ -29,6 +29,6 @@ module.exports = merge(commonConfig, {
         filename: 'index.js'
     },
     devServer: {
-        contentBase: './dev-playground'
+        contentBase: './playground'
     }
 });

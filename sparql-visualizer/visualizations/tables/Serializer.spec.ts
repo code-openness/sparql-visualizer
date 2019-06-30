@@ -22,9 +22,11 @@ const DATA_ROWS: DataRow[] = [
 
 describe('Table Serializer', () => {
     let tableElement: HTMLElement;
+    let consoleWarnStub: SinonStub;
 
     beforeEach(() => {
         tableElement = createHTMLTable(DATA_ROWS);
+        consoleWarnStub = sinon.stub(console, 'warn');
     });
 
     afterEach(() => {
@@ -48,12 +50,8 @@ describe('Table Serializer', () => {
     });
 
     it('should contain all provided keys in the correct order of the head', () => {
-        const thElements: string[] = [];
-
-        tableElement.querySelectorAll('table > thead > tr > th').forEach(
-            (th: Element): void => {
-                thElements.push(th.innerHTML);
-            }
+        const thElements: string[] = Array.from(tableElement.querySelectorAll('table > thead > tr > th')).map(
+            (element: Element): string => element.textContent || ''
         );
 
         expect(thElements).toEqual(Object.keys(DATA_ROWS[0]));
@@ -64,9 +62,7 @@ describe('Table Serializer', () => {
     });
 
     it('should contain one or more rows in the table body', () => {
-        expect(tableElement.querySelectorAll('table > tbody > tr').length).toEqual(
-            DATA_ROWS.length
-        );
+        expect(tableElement.querySelectorAll('table > tbody > tr').length).toEqual(DATA_ROWS.length);
     });
 
     it('should contain all provided values of each row in the body', () => {
@@ -91,8 +87,6 @@ describe('Table Serializer', () => {
     });
 
     it('should return a warning Message if there is no data', () => {
-        const consoleWarnStub: SinonStub = sinon.stub(console, 'warn');
-
         createHTMLTable([]);
 
         expect(consoleWarnStub.callCount).toEqual(1);

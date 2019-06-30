@@ -1,12 +1,10 @@
-import { DataRow } from '../../sparql/index.types';
-import { requestQueryResults } from '../../sparql/Request';
-import { WikidataEndpoint } from '../../wikidata-endpoint';
 import { createHTMLTable } from './Serializer';
+import { requestQueryResults } from '../../sparql/Request';
 
-export async function createDataTable(
-    endpoint: WikidataEndpoint,
-    sparqlQuery: string
-): Promise<HTMLElement> {
-    const table: DataRow[] = await requestQueryResults(endpoint.getSPARQLQueryURL(), sparqlQuery);
+type DataRow = import('../../sparql/index.types').DataRow;
+type VisualizationParameters = import('../../serializer/index.types').VisualizationParameters;
+
+export async function createTableElement({ endpoint, query }: VisualizationParameters): Promise<HTMLElement> {
+    const table: DataRow[] = await requestQueryResults(endpoint.getSPARQLQueryURL(), query);
     return createHTMLTable(table);
 }

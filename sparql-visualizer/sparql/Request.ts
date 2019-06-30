@@ -3,18 +3,15 @@ import { queryNormalizer } from './Normalizer';
 
 type SPARQLSelectResponse = import('./index.types').SPARQLSelectResponse;
 
-export async function requestQueryResults(
-    endpoint: string,
-    sparqlQuery: string
-): Promise<DataRow[]> {
-    const requestUrl: string = buildRequestURL(endpoint, sparqlQuery);
+export async function requestQueryResults(sparqlEndpointUrl: string, sparqlQuery: string): Promise<DataRow[]> {
+    const requestUrl: string = buildRequestURL(sparqlEndpointUrl, sparqlQuery);
     const sparqlResponse: SPARQLSelectResponse = await requestSPARQLSelectResponse(requestUrl);
     return sparqlResponseToDataTable(sparqlResponse);
 }
 
-export function buildRequestURL(endpoint: string, sparqlQuery: string): string {
+export function buildRequestURL(sparlqEndpointUrl: string, sparqlQuery: string): string {
     const encodedQuery: string = encodeURIComponent(queryNormalizer(sparqlQuery));
-    return `${endpoint}/sparql?query=${encodedQuery}`;
+    return `${sparlqEndpointUrl}/sparql?query=${encodedQuery}`;
 }
 
 export async function requestSPARQLSelectResponse(url: string): Promise<SPARQLSelectResponse> {

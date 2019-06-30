@@ -54,7 +54,7 @@ const JSON_RESPONSE: SPARQLSelectResponse = {
         ]
     }
 };
-const SPARQL_QUERY: string = '# sparql query';
+const SPARQL_QUERY: string = 'sparql query';
 
 describe('SPARQL Request', () => {
     let fetchStub: SinonStub;
@@ -70,9 +70,7 @@ describe('SPARQL Request', () => {
     });
 
     it('should compose the endpoint and SPARQL query in the right URL', () => {
-        expect(buildRequestURL(WIKIDATA_URL, SPARQL_QUERY)).toEqual(
-            'wikidata.org/sparql?query=%23%20sparql%20query'
-        );
+        expect(buildRequestURL(WIKIDATA_URL, SPARQL_QUERY)).toEqual('wikidata.org/sparql?query=sparql%20query');
     });
 
     it('should include a JSON content header', async () => {
@@ -109,10 +107,7 @@ describe('SPARQL Request', () => {
 
         const dataTable: DataRow[] = await requestQueryResults(WIKIDATA_URL, SPARQL_QUERY);
 
-        expect(dataTable).toEqual([
-            { Moep: 'f', Blubb: 'h', kljlk: 'v' },
-            { Moep: 'm', Blubb: 'n', kljlk: 'k' }
-        ]);
+        expect(dataTable).toEqual([{ Moep: 'f', Blubb: 'h', kljlk: 'v' }, { Moep: 'm', Blubb: 'n', kljlk: 'k' }]);
     });
 
     it('should pass the right request url to fetch', async () => {
@@ -120,9 +115,7 @@ describe('SPARQL Request', () => {
 
         await requestQueryResults(WIKIDATA_URL, SPARQL_QUERY);
 
-        expect(fetchStub.firstCall.args[0]).toEqual(
-            'wikidata.org/sparql?query=%23%20sparql%20query'
-        );
+        expect(fetchStub.firstCall.args[0]).toEqual('wikidata.org/sparql?query=sparql%20query');
     });
 
     function createStubResponse(returnValue: object = {}): Response {
