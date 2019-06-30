@@ -2,7 +2,7 @@ type VisualisationIdentifier = import('../visualizations').VisualisationIdentifi
 type WikidataEndpoint = import('../wikidata-endpoint').WikidataEndpoint;
 
 export interface VisualizationRoutingEntry {
-    visualizationType: VisualisationIdentifier | 'Default';
+    visualizationType: VisualisationIdentifier;
     createElement: VisualizationFunction;
 }
 

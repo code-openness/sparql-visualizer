@@ -17,6 +17,7 @@
             "variable-declaration",
             "member-variable-declaration"
         ],
+        "no-non-null-assertion": false,
         "no-any": true,
         "no-empty-interface": true,
         "no-console": true,
@@ -27,7 +28,6 @@
         "promise-must-complete": true,
         "prefer-array-literal": true,
         "max-line-length": [true, 120],
-        "no-non-null-assertion": true,
         "no-parameter-reassignment": true,
         "promise-function-async": true,
         "unified-signatures": true,

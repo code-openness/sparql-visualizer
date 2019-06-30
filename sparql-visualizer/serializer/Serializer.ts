@@ -1,21 +1,26 @@
-import { WikidataEndpoint, WikidataEndpointConfig } from '../wikidata-endpoint';
+import { WikidataEndpoint } from '../wikidata-endpoint';
 import { createElement } from './DomAccess';
 import { selectMatchingVisualizationCallback } from './VisualizationRoutes';
-import { VisualizationFunction } from './index.types';
 
 type VisualisationIdentifier = import('../visualizations/index.types').VisualisationIdentifier;
+type VisualizationFunction = import('./index.types').VisualizationFunction;
+type VisualizationParameters = import('./index.types').VisualizationParameters;
+type WikidataEndpointConfig = import('../wikidata-endpoint').WikidataEndpointConfig;
+
+export const CSS_PREFIX: string = 'sparql-visualizer';
 
 export const CSS_CLASSES: { [key: string]: string } = {
-    GRAPHIC: 'sparql-visualizer__graph'
+    GRAPH_CONTAINER: `${CSS_PREFIX}-graph__container`,
+    GRAPH_ELEMENT: `${CSS_PREFIX}-graph__element`
 };
 
 export class Serializer {
     private endpoint: WikidataEndpoint = new WikidataEndpoint();
 
     public async serialize(): Promise<void> {
-        const elementsToVisualize: NodeListOf<HTMLElement> = document.querySelectorAll('[data-visualization]');
+        const elementsToVisualize: HTMLElement[] = Array.from(document.querySelectorAll('[data-visualization]'));
 
-        elementsToVisualize.forEach((element: HTMLElement) => this.visualize(element));
+        await Promise.all(elementsToVisualize.map((element: HTMLElement): Promise<void> => this.visualize(element)));
     }
 
     public withEndpoint(endpointConfig: WikidataEndpointConfig): Serializer {
@@ -23,30 +28,47 @@ export class Serializer {
         return this;
     }
 
-    public async visualize(element: HTMLElement): Promise<void> {
-        const { endpoint } = this;
-        const { visualizationType, query } = this.getParameters(element);
+    public async visualize(externalContainer: HTMLElement): Promise<void> {
+        const visualizationParameters: VisualizationParameters = {
+            ...getParameters(externalContainer),
+            endpoint: this.endpoint
+        };
 
-        const createVisualization: VisualizationFunction = selectMatchingVisualizationCallback(visualizationType);
+        const visualizationElement: HTMLElement = await createVisualizationElement(visualizationParameters);
+        const visualizationContainer: HTMLElement = createVisualizationContainer();
 
-        const visualization: HTMLElement = await createVisualization({
-            endpoint,
-            query,
-            visualizationType
-        });
+        visualizationContainer.appendChild(visualizationElement);
+        externalContainer.appendChild(visualizationContainer);
+    }
+}
 
-        const graphContainer: HTMLElement = createElement(`<div class="${CSS_CLASSES.GRAPHIC}"></div>`);
-        graphContainer.appendChild(visualization);
+async function createVisualizationElement(visualizationParameters: VisualizationParameters): Promise<HTMLElement> {
+    const { visualizationType } = visualizationParameters;
 
-        element.appendChild(graphContainer);
+    const createVisualization: VisualizationFunction = selectMatchingVisualizationCallback(visualizationType);
+
+    const visualization: HTMLElement = await createVisualization(visualizationParameters);
+    visualization.classList.add(CSS_CLASSES.GRAPH_ELEMENT);
+
+    return visualization;
+}
+
+function createVisualizationContainer(): HTMLElement {
+    return createElement(`<div class="${CSS_CLASSES.GRAPH_CONTAINER}"></div>`);
+}
+
+function getParameters(element: HTMLElement): { query: string; visualizationType: VisualisationIdentifier } {
+    const visualizationType: VisualisationIdentifier = element.getAttribute(
+        'data-visualization'
+    ) as VisualisationIdentifier;
+
+    const queryElement: HTMLElement | null = element.querySelector('[data-content=Query]');
+
+    if (!queryElement) {
+        throw new Error('Could not find element with data-content="Query"');
     }
 
-    private getParameters(element: HTMLElement): { visualizationType: VisualisationIdentifier; query: string } {
-        const visualizationType: VisualisationIdentifier = element.getAttribute(
-            'data-visualization'
-        ) as VisualisationIdentifier;
-        const query: string = (element.firstElementChild as HTMLElement).innerText;
+    const query: string = queryElement.textContent!;
 
-        return { visualizationType, query };
-    }
+    return { query, visualizationType };
 }
