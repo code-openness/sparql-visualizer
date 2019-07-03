@@ -27,77 +27,28 @@
         <div class="main-content">
             <h2 class="main-content-headline">The Test Cockpit for a Scholia Refactoring</h2>
             <p>Here are some visualizations.</p>
-            <div class="content-panel menu">
-                <ul>
-                    <li><a href="#chart-content">Chart</a></li>
-                    <li><a href="#table-content">Table</a></li>
-                </ul>
-            </div>
-
-            <h3 id="chart-content">Chart</h3>
-
             <div class="dropdown">
-                <button class="dropbtn">Farbe ändern</button>
-                <div class="dropdown-content">
-                    <a href="#">Farbe 1</a>
-                    <a href="#">Farbe 2</a>
-                    <a href="#">Farbe 3</a>
+                <div class="select-wrapper fa fa-angle-down">
+                    <select id="select-chart">
+                        <option disabled>Chart ändern</option>
+                    </select>
                 </div>
             </div>
-
             <div class="dropdown">
-                <button class="dropbtn">Chart ändern</button>
-                <div class="dropdown-content">
-                    <a href="#">Chart 1</a>
-                    <a href="#">Chart 2</a>
-                    <a href="#">Chart 3</a>
+                <div class="select-wrapper fa fa-angle-down">
+                    <select id="select-endpoint">
+                        <option disabled>Endpoint ändern</option>
+                    </select>
                 </div>
             </div>
-
+            <button id="refresh-button" class="refresh-button">Refresh</button>
             <div class="visualisation-wrapper" data-visualization="LineChart">
-                <script type="text/plain" data-content="Configuration">
-                    SELECT ?year (COUNT(?work) AS ?number_of_works) ?organization ?organizationLabel
-                    WHERE {
-                      {
-                        SELECT DISTINCT ?year ?work ?organization WHERE {
-                          hint:Query hint:optimizer "None".
-                          VALUES ?organization {   wd:Q1269766  wd:Q193196   }
-                          ?author wdt:P108 | wdt:P463 | (wdt:P1416/wdt:P361*) ?organization .
-                          ?work wdt:P50 ?author .
-                          ?work wdt:P577 ?publication_date .
-                          BIND(STR(YEAR(?publication_date)) AS ?year)
-                        }
-                        GROUP BY ?work ?year ?organization
-                      }
-                      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+                <textarea class="textinput" data-content="Query">
+                    SELECT ?item WHERE {
+                    ?item wdt:P7 wd:Q12
                     }
-                    GROUP BY ?year ?organization ?organizationLabel
-                    ORDER BY ?year
-                </script>
-            </div>
-
-            <h3 id="table-content">Table</h3>
-            <div class="" data-visualization="Table">
-                <script type="application/json" data-content="Configuration">
-                    SELECT ?year (COUNT(?work) AS ?number_of_works) ?organization ?organizationLabel
-                    WHERE {
-                      {
-                        SELECT DISTINCT ?year ?work ?organization WHERE {
-                          hint:Query hint:optimizer "None".
-                          VALUES ?organization {   wd:Q1269766  wd:Q193196   }
-                          ?author wdt:P108 | wdt:P463 | (wdt:P1416/wdt:P361*) ?organization .
-                          ?work wdt:P50 ?author .
-                          ?work wdt:P577 ?publication_date .
-                          BIND(STR(YEAR(?publication_date)) AS ?year)
-                        }
-                        GROUP BY ?work ?year ?organization
-                      }
-                      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-                    }
-                    GROUP BY ?year ?organization ?organizationLabel
-                    ORDER BY ?year
-                    LIMIT 10
-                </script>
+                 </textarea
+                >
             </div>
         </div>
         <div class="footer">
