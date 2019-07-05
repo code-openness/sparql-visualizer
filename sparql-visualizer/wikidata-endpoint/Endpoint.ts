@@ -1,7 +1,7 @@
 type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
 export const DEFAULT_WIKIDATA_CONFIG: Required<WikidataEndpointConfig> = {
-    host: 'wikidata.org',
+    host: 'query.wikidata.org',
     httpProtocol: 'https'
 };
 
@@ -15,10 +15,6 @@ export class WikidataEndpoint {
 
     constructor(configuration: WikidataEndpointConfig = {}) {
         this.configuration = { ...DEFAULT_WIKIDATA_CONFIG, ...configuration };
-    }
-
-    public toString(): string {
-        return this.configuration.host;
     }
 
     public getSPARQLQueryURL(): string {
@@ -35,6 +31,6 @@ export class WikidataEndpoint {
 
     private getBaseUrl(): string {
         const { host, httpProtocol } = this.configuration;
-        return `${httpProtocol}://query.${host}`;
+        return `${httpProtocol}://${host}`;
     }
 }

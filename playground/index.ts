@@ -1,31 +1,34 @@
 import './style.scss';
-import { ENDPOINT_LIST, VISUALIZATION_TYPES_LIST } from './variables';
-import { Serializer } from '../sparql-visualizer';
+import { DATA_ATTRIBUTE_NAME, ENDPOINT_LIST, ENDPOINT_NAME_LIST, VISUALIZATION_TYPES_LIST } from './variables';
+import { Serializer, WikidataEndpointConfig } from '../sparql-visualizer';
+import { DEFAULT_WIKIDATA_CONFIG } from '../sparql-visualizer/wikidata-endpoint/Endpoint';
+
+export let dataElements: NodeList | null;
+export let endpoint: WikidataEndpointConfig = DEFAULT_WIKIDATA_CONFIG;
 
 init();
 
-(async function init(): Promise<void> {
-    await new Serializer().serialize();
-})();
-
 export function init(): void {
-    // TODO init serializer
+    dataElements = document.querySelectorAll('[' + DATA_ATTRIBUTE_NAME + ']');
+    console.log(endpoint);
 
     const visIdSelection: HTMLSelectElement | null = addDropdownSelection('select-chart', VISUALIZATION_TYPES_LIST);
-    const endpointSelection: HTMLSelectElement | null = addDropdownSelection('select-endpoint', ENDPOINT_LIST);
+    const endpointSelection: HTMLSelectElement | null = addDropdownSelection('select-endpoint', ENDPOINT_NAME_LIST);
     const refreshButton: HTMLButtonElement | null = document.getElementById('refresh-button') as HTMLButtonElement;
 
     if (visIdSelection) {
         visIdSelection.addEventListener('change', (event: Event) => {
-            if (event.target instanceof HTMLSelectElement) {
-                // TODO serializer.setVisId
+            if (event.target instanceof HTMLSelectElement && dataElements) {
+                dataElements.forEach((element: Node) => {
+                    (element as HTMLElement).setAttribute(DATA_ATTRIBUTE_NAME, visIdSelection.value);
+                });
             }
         });
     }
     if (endpointSelection) {
         endpointSelection.addEventListener('change', (event: Event) => {
             if (event.target instanceof HTMLSelectElement) {
-                // TODO serializer.setEndpoint
+                endpoint = ENDPOINT_LIST[endpointSelection.selectedIndex - 1];
             }
         });
     }
@@ -34,18 +37,17 @@ export function init(): void {
             refreshVisualisation();
         });
     }
+
+    serializerInit();
 }
 
 export function addDropdownSelection(id: string, options: Object[]): HTMLSelectElement {
     const selectedElement: HTMLSelectElement | null = document.getElementById(id) as HTMLSelectElement;
     if (selectedElement) {
-        options.forEach((option: any, index) => {
+        options.forEach((option: any) => {
             const tmpOption: HTMLOptionElement = document.createElement('option');
-            tmpOption.value = '' + index;
+            tmpOption.value = option.toString();
             tmpOption.text = option.toString();
-            if (index === 0) {
-                tmpOption.defaultSelected;
-            }
             selectedElement.add(tmpOption);
         });
     }
@@ -53,5 +55,16 @@ export function addDropdownSelection(id: string, options: Object[]): HTMLSelectE
 }
 
 async function refreshVisualisation(): Promise<void> {
-    await new Serializer().serialize();
+    if (dataElements) {
+        dataElements.forEach((element: Node) => {
+            if (element.childNodes.length > 1) {
+                element.removeChild(element.lastChild as Node);
+            }
+        });
+        await serializerInit();
+    }
+}
+
+async function serializerInit(): Promise<void> {
+    await new Serializer().withEndpoint(endpoint).serialize();
 }

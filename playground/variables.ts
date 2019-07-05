@@ -1,11 +1,9 @@
 import { VisualisationIdentifier } from '../sparql-visualizer/visualizations/index.types';
-import { WikidataEndpoint } from '../sparql-visualizer/wikidata-endpoint';
+import { WikidataEndpointConfig } from '../sparql-visualizer/wikidata-endpoint';
 import { DEFAULT_WIKIDATA_CONFIG, FU_WIKIDATA_CONFIG } from '../sparql-visualizer/wikidata-endpoint/Endpoint';
 
-export const ENDPOINT_LIST: WikidataEndpoint[] = [
-    new WikidataEndpoint(DEFAULT_WIKIDATA_CONFIG),
-    new WikidataEndpoint(FU_WIKIDATA_CONFIG)
-];
+export const ENDPOINT_LIST: WikidataEndpointConfig[] = [DEFAULT_WIKIDATA_CONFIG, FU_WIKIDATA_CONFIG];
+export const ENDPOINT_NAME_LIST: string[] = [DEFAULT_WIKIDATA_CONFIG.host, FU_WIKIDATA_CONFIG.host];
 
 export const VISUALIZATION_TYPES_LIST: VisualisationIdentifier[] = [
     'BubbleChart',
@@ -24,3 +22,5 @@ export const VISUALIZATION_TYPES_LIST: VisualisationIdentifier[] = [
 ];
 
 export const IFRAME_CLASS: string = 'resp-iframe';
+
+export const DATA_ATTRIBUTE_NAME = 'data-visualization';
