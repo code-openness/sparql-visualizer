@@ -21,4 +21,4 @@ export const VISUALIZATION_TYPES_LIST: VisualisationIdentifier[] = [
     'LineChart'
 ];
 
-export const DATA_ATTRIBUTE_NAME = 'data-visualization';
+export const DATA_ATTRIBUTE_NAME: string = 'data-visualization';

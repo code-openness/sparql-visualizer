@@ -10,7 +10,6 @@ init();
 
 export function init(): void {
     dataElements = document.querySelectorAll('[' + DATA_ATTRIBUTE_NAME + ']');
-    console.log(currentEndpoint);
 
     const visIdSelection: HTMLSelectElement | null = addDropdownSelection('select-chart', VISUALIZATION_TYPES_LIST);
     const endpointSelection: HTMLSelectElement | null = addDropdownSelection('select-endpoint', ENDPOINT_NAME_LIST);
@@ -33,7 +32,7 @@ export function init(): void {
         });
     }
     if (refreshButton) {
-        refreshButton.addEventListener('click', function() {
+        refreshButton.addEventListener('click', () => {
             refreshVisualisation();
         });
     }
@@ -41,10 +40,10 @@ export function init(): void {
     serializerInit();
 }
 
-export function addDropdownSelection(id: string, options: Object[]): HTMLSelectElement {
+export function addDropdownSelection(id: string, options: string[]): HTMLSelectElement {
     const selectedElement: HTMLSelectElement | null = document.getElementById(id) as HTMLSelectElement;
     if (selectedElement) {
-        options.forEach((option: any) => {
+        options.forEach((option: string) => {
             const tmpOption: HTMLOptionElement = document.createElement('option');
             tmpOption.value = option.toString();
             tmpOption.text = option.toString();
