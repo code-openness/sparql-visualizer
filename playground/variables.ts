@@ -21,6 +21,4 @@ export const VISUALIZATION_TYPES_LIST: VisualisationIdentifier[] = [
     'LineChart'
 ];
 
-export const IFRAME_CLASS: string = 'resp-iframe';
-
 export const DATA_ATTRIBUTE_NAME = 'data-visualization';

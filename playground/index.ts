@@ -4,13 +4,13 @@ import { Serializer, WikidataEndpointConfig } from '../sparql-visualizer';
 import { DEFAULT_WIKIDATA_CONFIG } from '../sparql-visualizer/wikidata-endpoint/Endpoint';
 
 export let dataElements: NodeList | null;
-export let endpoint: WikidataEndpointConfig = DEFAULT_WIKIDATA_CONFIG;
+export let currentEndpoint: WikidataEndpointConfig = DEFAULT_WIKIDATA_CONFIG;
 
 init();
 
 export function init(): void {
     dataElements = document.querySelectorAll('[' + DATA_ATTRIBUTE_NAME + ']');
-    console.log(endpoint);
+    console.log(currentEndpoint);
 
     const visIdSelection: HTMLSelectElement | null = addDropdownSelection('select-chart', VISUALIZATION_TYPES_LIST);
     const endpointSelection: HTMLSelectElement | null = addDropdownSelection('select-endpoint', ENDPOINT_NAME_LIST);
@@ -28,7 +28,7 @@ export function init(): void {
     if (endpointSelection) {
         endpointSelection.addEventListener('change', (event: Event) => {
             if (event.target instanceof HTMLSelectElement) {
-                endpoint = ENDPOINT_LIST[endpointSelection.selectedIndex - 1];
+                currentEndpoint = ENDPOINT_LIST[endpointSelection.selectedIndex - 1];
             }
         });
     }
@@ -66,5 +66,5 @@ async function refreshVisualisation(): Promise<void> {
 }
 
 async function serializerInit(): Promise<void> {
-    await new Serializer().withEndpoint(endpoint).serialize();
+    await new Serializer().withEndpoint(currentEndpoint).serialize();
 }
