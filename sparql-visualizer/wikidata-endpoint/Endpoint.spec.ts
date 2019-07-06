@@ -3,7 +3,7 @@ import { WikidataEndpoint } from './Endpoint';
 type WikidataEndpointConfig = import('./index.types').WikidataEndpointConfig;
 
 const CUSTOM_ENDPOINT_CONFIG: WikidataEndpointConfig = {
-    host: 'pik-wikidata.de',
+    host: 'query.pik-wikidata.de',
     httpProtocol: 'http'
 };
 
@@ -16,7 +16,7 @@ describe('Wikidata Endpoint', () => {
 
     it('should return the default endpoints when nothing was procided', () => {
         expect(wikidataEndpoint.getConfiguration()).toEqual({
-            host: 'wikidata.org',
+            host: 'query.wikidata.org',
             httpProtocol: 'https'
         });
     });
