@@ -43,10 +43,30 @@
             </div>
             <button id="refresh-button" class="refresh-button">refresh</button>
             <div class="visualisation-wrapper" data-visualization="LineChart">
-                <textarea class="textinput" data-content="Query">
-                    SELECT ?item WHERE {
-                    ?item wdt:P7 wd:Q12
-                    }
+                <textarea data-textarea class="textinput" data-content="Query">
+#defaultView:BarChart
+SELECT ?year ?number_of_works ?author_label WHERE {
+  {
+    SELECT ?year ?number_of_works ?author ?author_label_
+    WHERE {
+      {
+        SELECT ?author ?year (COUNT(?work) AS ?number_of_works) WHERE {
+          hint:Query hint:optimizer "None".
+          VALUES ?author {    wd:Q80  wd:Q6135847  wd:Q30085536    }
+          ?work wdt:P50 ?author .
+          ?work wdt:P577 ?publication_date .
+          BIND(STR(YEAR(?publication_date)) AS ?year)
+        }
+        GROUP BY ?author ?year
+      }
+      ?author rdfs:label ?author_label_ .
+      FILTER (LANG(?author_label_) = 'en')
+    }
+  }
+  # Represent the author by name and Q identifier
+  BIND (CONCAT(?author_label_, " (", SUBSTR(STR(?author), 32), ")") AS ?author_label)
+}
+ORDER BY ?year
                  </textarea
                 >
             </div>

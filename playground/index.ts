@@ -37,6 +37,15 @@ export function init(): void {
         });
     }
 
+    const textAreas: NodeList = document.querySelectorAll('[data-textarea]');
+    textAreas.forEach((textArea: Node) => {
+        (textArea as HTMLTextAreaElement).addEventListener('change', (event: Event) => {
+            if (event.target instanceof HTMLTextAreaElement) {
+                event.target.innerHTML = event.target.value;
+            }
+        });
+    });
+
     serializerInit();
 }
 
