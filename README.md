@@ -55,6 +55,10 @@ A typescript library to simplify visualization of SPARQL queries.
         })
         .serialize();
     ```
+    
+4. Style your elements as you wish, your visualization element will contain a
+    container with the css class `sparql-visualizer__container`. Inside there
+    will reside your visualization with the class `sparql-visualizer__element`.
 
 ## Setup
 
