@@ -5,7 +5,7 @@
 
 # SPARQL visualizer
 
-A typescript library to simplify visualization of SPARQL queries.
+A TypeScript library to simplify visualization of SPARQL queries.
 
 ## Usage
 
@@ -31,13 +31,13 @@ A typescript library to simplify visualization of SPARQL queries.
     </script>
     ```
 
-3. Construct a serializer object, configure it as you like and call `serialize`.
+3. Construct a serializer object, configure it as you like and name it `serialize`.
 
     ```js
     const { Serializer } = SparqlVisualizer;
     const serializer = new Serializer();
 
-    // bellow is an example with the standard endpoint configuration
+    // below is an example with the standard endpoint configuration
     serializer.withEndpoint({ httpProtocol: 'https', host: 'wikidata.org' });
 
     await serializer.serialize();
@@ -58,7 +58,7 @@ A typescript library to simplify visualization of SPARQL queries.
 
 ## Setup
 
-In order to take part in the development you need to setup the following tools.
+In order to take part in the development, you need to set up the following tools.
 
 ### Node
 
@@ -71,12 +71,12 @@ nvm use
 
 **_or_**
 
-You install the node version manually, that specified in the `.nvmrc` file, that can
+You install the node version manually, which is specified in the `.nvmrc` file and can
 also be found at the top of this readme file, from the [official site](https://nodejs.org/en/).
 
 ### Yarn
 
-Package management is done with [yarn](https://yarnpkg.com/lang/en/), for consistency use the version
+Package management is done with [yarn](https://yarnpkg.com/lang/en/). For consistency, use the version
 from the badge specified at the top of the readme file or higher.
 
 ### Install all dependencies
@@ -112,12 +112,11 @@ yarn test      # run jest to check all test suites (*.spec.ts)
 Testing is performed with [Jest](https://jestjs.io/). Checkout their documentation and look at
 existing test suites (all files with suffix `.spec.ts`) to get you started.
 
-The [sinon](https://sinonjs.org/) library is used to mock, stub, spy and fake
-withing tests to make our lives easier.
+The [sinon](https://sinonjs.org/) library is used to mock, stub, spy and fake tests to make our lives easier.
 
 ## Deploy
 
 Run `yarn build` to generate the final Javascript file in the `dist/` folder
-and import it in your Javascript, Typescript project or through a `<script>` tag
-in your static HTML. After that you can use the global `SparqlVisualizer` object
+and import it in your Javascript, TypeScript project or through a `<script>` tag
+in your static HTML. After that, you can use the global `SparqlVisualizer` object
 to access the Serializer class.
